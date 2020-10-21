@@ -6,3 +6,5 @@ export const colors = {
     l: "42%",
   },
 };
+
+export default {};

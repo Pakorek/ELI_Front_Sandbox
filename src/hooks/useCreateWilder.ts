@@ -1,9 +1,24 @@
-import { useState, useContext } from "react";
+import { useState, useContext, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import useDelay from "./useDelay";
 import AppContext from "../context/AppContext";
 
-function useCreateWilder() {
+type CreateWilderReturn = {
+  inputCity: {
+    value: string;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  };
+  inputName: {
+    value: string;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  };
+  formSubmission: (e: FormEvent) => Promise<void>;
+  loading: boolean;
+  delayed: boolean;
+  error: string;
+};
+
+function useCreateWilder(): CreateWilderReturn {
   const dispatch = useContext(AppContext);
   const [name, setName] = useState("");
   const [city, setCity] = useState("");
@@ -11,7 +26,7 @@ function useCreateWilder() {
   const [loading, setLoading] = useState(false);
   const [delayed, setDelayed] = useDelay(500);
 
-  const formSubmission = async (e) => {
+  const formSubmission = async (e: FormEvent) => {
     e.preventDefault();
     try {
       setDelayed(true);
@@ -26,17 +41,19 @@ function useCreateWilder() {
       setLoading(false);
       if (result.data.success) {
         setError("");
-        dispatch({
-          type: "WILDER_ADDED",
-          newWilder: result.data.result,
-        });
+        if (dispatch) {
+          dispatch({
+            type: "WILDER_ADDED",
+            newWilder: result.data.result,
+          });
+        }
       }
-    } catch (error) {
+    } catch (err) {
       setLoading(false);
-      if (error.response) {
-        setError(error.response.data.message);
+      if (err.response) {
+        setError(err.response.data.message);
       } else {
-        setError(error.message);
+        setError(err.message);
       }
     }
   };
@@ -44,11 +61,11 @@ function useCreateWilder() {
   return {
     inputCity: {
       value: city,
-      onChange: (e) => setCity(e.target.value),
+      onChange: (e: ChangeEvent<HTMLInputElement>) => setCity(e.target.value),
     },
     inputName: {
       value: name,
-      onChange: (e) => setName(e.target.value),
+      onChange: (e: ChangeEvent<HTMLInputElement>) => setName(e.target.value),
     },
     formSubmission,
     loading,

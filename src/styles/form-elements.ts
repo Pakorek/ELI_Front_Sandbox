@@ -1,6 +1,10 @@
 import styled, { keyframes } from "styled-components";
 import { colors } from "./globals";
 
+type ButtonProps = {
+  showLoading: boolean;
+};
+
 export const Form = styled.form`
   display: grid;
   place-content: center;
@@ -50,7 +54,7 @@ const rotate = keyframes`
   }
 `;
 
-export const Button = styled.button`
+export const Button = styled.button<ButtonProps>`
   background-color: ${({ showLoading }) =>
     showLoading ? "#fff" : colors.primary};
   color: #fff;

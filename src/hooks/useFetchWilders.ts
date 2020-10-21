@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, Dispatch } from "react";
 import axios from "axios";
+import { Action } from "../reducers/appReducer";
 
-const useFetchWilders = (dispatch) => {
+const useFetchWilders = (dispatch: Dispatch<Action>): void => {
   useEffect(() => {
-    console.log("feth");
     const fetchWilders = async () => {
       try {
         const result = await axios("http://localhost:5000/api/wilder/read");
@@ -12,6 +12,7 @@ const useFetchWilders = (dispatch) => {
           wilders: result.data.result,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.log(error);
       }
     };
