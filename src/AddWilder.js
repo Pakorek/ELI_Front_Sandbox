@@ -3,7 +3,7 @@ import { Button, Error, Form, Input, Label } from "./styles/form-elements";
 import { ReactComponent as LoadingIcon } from "./icons/hourglass.svg";
 import useCreateWilder from "./hooks/useCreateWilder";
 
-function AddWilder({ onSuccess }) {
+function AddWilder() {
   const {
     inputCity,
     inputName,
@@ -11,7 +11,7 @@ function AddWilder({ onSuccess }) {
     loading,
     delayed,
     error,
-  } = useCreateWilder(onSuccess);
+  } = useCreateWilder();
 
   return (
     <Form onSubmit={formSubmission}>

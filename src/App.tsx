@@ -22,7 +22,7 @@ const initialState = {
   wilders: [],
 };
 
-function App() {
+function App(): JSX.Element {
   const [state, dispatch] = useReducer(appReducer, initialState);
   useFetchWilders(dispatch);
 
@@ -53,7 +53,16 @@ function App() {
         <h2>Wilders</h2>
         <CardRow>
           {state.wilders.map((wilder) => (
-            <Wilder key={wilder._id} {...wilder} />
+            <Wilder
+              // eslint-disable-next-line no-underscore-dangle
+              key={wilder._id}
+              // eslint-disable-next-line no-underscore-dangle
+              _id={wilder._id}
+              city={wilder.city}
+              name={wilder.name}
+              justAdded={wilder.justAdded}
+              skills={wilder.skills}
+            />
           ))}
         </CardRow>
       </Container>

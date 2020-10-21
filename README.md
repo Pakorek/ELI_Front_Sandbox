@@ -12,4 +12,4 @@
 - Wilder
 - Skill
 - Régler les erreurs et warning
--
+- App context et reducer
