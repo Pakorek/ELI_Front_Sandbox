@@ -10,7 +10,7 @@ type WilderProps = {
   skills: any[]
 }
 
-function Wilder({ city, justAdded, name, skills }:WilderProps) {
+function Wilder({ city, justAdded, name, skills }:WilderProps   ) {
   return (
     <Card newCard={justAdded}>
       <img src={blank_profile} alt={`${name} Profile`} />
