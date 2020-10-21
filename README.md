@@ -11,3 +11,5 @@
 - index
 - Wilder
 - Skill
+- Régler les erreurs et warning
+-

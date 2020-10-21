@@ -1,16 +1,16 @@
 import React from "react";
 import blank_profile from "./icons/blank-profile-picture-female.png";
-import Skill from "./Skill";
+import Skill, { SkillProps } from "./Skill";
 import { Card, List } from "./styles/elements";
 
 type WilderProps = {
-  city: string
-  justAdded: boolean
-  name:string
-  skills: any[]
-}
+  city: string;
+  justAdded: boolean;
+  name: string;
+  skills: SkillProps[];
+};
 
-function Wilder({ city, justAdded, name, skills }:WilderProps   ) {
+function Wilder({ city, justAdded, name, skills }: WilderProps): JSX.Element {
   return (
     <Card newCard={justAdded}>
       <img src={blank_profile} alt={`${name} Profile`} />
@@ -20,7 +20,14 @@ function Wilder({ city, justAdded, name, skills }:WilderProps   ) {
       <h4>Wild Skills</h4>
       <List>
         {skills.map((skill) => (
-          <Skill key={skill._id} {...skill} />
+          <Skill
+            // eslint-disable-next-line no-underscore-dangle
+            key={skill._id}
+            // eslint-disable-next-line no-underscore-dangle
+            _id={skill._id}
+            title={skill.title}
+            votes={skill.votes}
+          />
         ))}
       </List>
     </Card>

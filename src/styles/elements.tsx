@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { colors } from "./globals";
 
 type CardProps = {
-  newCard: boolean
-}
+  newCard: boolean;
+};
 
 type BadgeProps = {
-  votes: number
-}
+  votes: number;
+};
 
 export const Header = styled.header`
   background-color: ${colors.primary};
