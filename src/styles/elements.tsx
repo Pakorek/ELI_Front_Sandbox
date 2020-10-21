@@ -1,6 +1,14 @@
 import styled from "styled-components";
 import { colors } from "./globals";
 
+type CardProps = {
+  newCard: boolean
+}
+
+type BadgeProps = {
+  votes: number
+}
+
 export const Header = styled.header`
   background-color: ${colors.primary};
   color: #fff;
@@ -34,7 +42,7 @@ const newStyle = `{
   outline: 3px solid transparent;
 }`;
 
-export const Card = styled.article`
+export const Card = styled.article<CardProps>`
   padding: 20px;
   border: 1px solid #c9c9c9;
   border-radius: 7px;
@@ -82,7 +90,7 @@ export const List = styled.ul`
   }
 `;
 
-export const Badge = styled.span`
+export const Badge = styled.span<BadgeProps>`
   /* Center the content */
   align-items: center;
   display: flex;
