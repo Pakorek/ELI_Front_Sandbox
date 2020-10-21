@@ -3,7 +3,14 @@ import blank_profile from "./icons/blank-profile-picture-female.png";
 import Skill from "./Skill";
 import { Card, List } from "./styles/elements";
 
-function Wilder({ city, justAdded, name, skills }) {
+type WilderProps = {
+  city: string
+  justAdded: boolean
+  name:string
+  skills: any[]
+}
+
+function Wilder({ city, justAdded, name, skills }:WilderProps) {
   return (
     <Card newCard={justAdded}>
       <img src={blank_profile} alt={`${name} Profile`} />
