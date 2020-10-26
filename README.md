@@ -1,4 +1,4 @@
-# Create a React client
+# Add Typescript to a React client
 
 ## Steps
 
