@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useDelay = (
-  ms: number
-): [boolean, React.Dispatch<React.SetStateAction<boolean>>] => {
+const useDelay = ( ms: number ): [boolean, React.Dispatch<React.SetStateAction<boolean>>] => {
   const [delayed, setDelayed] = useState(false);
   useEffect(() => {
     // Happens when a dependency changes

@@ -6,7 +6,7 @@ const useFetchWilders = (dispatch: Dispatch<Action>): void => {
   useEffect(() => {
     const fetchWilders = async () => {
       try {
-        const result = await axios("http://localhost:5000/api/wilder/read");
+        const result = await axios("http://127.0.0.1:4300/graphql");
         dispatch({
           type: "WILDERS_FETCH_SUCCESS",
           wilders: result.data.result,
