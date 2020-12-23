@@ -1,10 +1,7 @@
-import {useMutation, useQuery} from "@apollo/client";
-import gql from "graphql-tag";
-import {useState} from "react";
 import {CardRow, Container, Footer, Header} from "../../styles/elements";
-import VirtualSchool from "../virtualSchool/virtualSchool";
 const React = require('react')
 
+/*
 type TeacherType = {
     _id: any
     firstName: string
@@ -13,6 +10,7 @@ type TeacherType = {
     seniority: number
     classroom: string
 }
+*/
 
 
 
@@ -36,7 +34,7 @@ export function Home(): JSX.Element {
         <>
             <Header>
                 <Container>
-                    <h1>Virtual School</h1>
+                    <h1>ELI Project</h1>
                 </Container>
             </Header>
             <Container>
@@ -44,9 +42,6 @@ export function Home(): JSX.Element {
                     {/*{data.getTeachers.forEach((teacher: TeacherType) => {*/}
                     {/*    console.log(teacher.firstName + teacher.lastName)*/}
                     {/*})}*/}
-
-                    <VirtualSchool/>
-
 
                 </CardRow>
             </Container>

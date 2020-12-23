@@ -1,17 +1,18 @@
 import { useForm } from "react-hook-form";
-import React, { useState } from "react";
-import { useLoginMutation } from "../network/loginMutation";
+import{ useState } from "react";
+import { useLoginMutation } from "../utils/loginMutation";
+const React = require('react')
 
-const AuthenticationForm = ({ loading }) => {
-  const [loginMutation, loginMutationResults] = useLoginMutation();
+const AuthenticationForm = (): JSX.Element => {
+  const [loginMutation, ] = useLoginMutation();
   const { handleSubmit, register } = useForm();
   const [error, setError] = useState();
 
-  const disableForm = loginMutationResults.loading || loading;
-
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: {email: string, password: string}) => {
     try {
-      await loginMutation(values.email, values.password);
+      // @ts-ignore
+      // don't know how to types this (yet)
+      await loginMutation(values.email, values.password)
     } catch (err) {
       setError(err);
     }
@@ -32,7 +33,7 @@ const AuthenticationForm = ({ loading }) => {
             placeholder="******"
           />
         </div>
-        <button type="submit" disabled={disableForm}>
+        <button type="submit">
           Submit
         </button>
       </form>

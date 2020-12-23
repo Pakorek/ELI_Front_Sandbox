@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
+import {FetchResult, useMutation} from "@apollo/react-hooks";
 import { useCookies } from "react-cookie";
-import { useAuthToken } from "../config/auth";
+import { useAuthToken } from "../hooks/auth";
 
 export const loginMutationGQL = gql`
   mutation auth($password: String!, $login: String!) {
@@ -28,9 +28,9 @@ export const useLoginMutation = () => {
   });
 
   // full login function
-  const login = (user, password) => {
+  const login = async (user: string, password: string): Promise<FetchResult<any>> => {
     removeAuthtoken();
-    return mutation({
+    return await mutation({
       variables: {
         password,
         login: user,

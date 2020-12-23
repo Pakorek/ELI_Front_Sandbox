@@ -1,5 +1,5 @@
 import React from "react";
-import { useLogout } from "../config/auth";
+import { useLogout } from "../hooks/auth";
 
 const Private = ({ user }) => {
   const logout = useLogout();
