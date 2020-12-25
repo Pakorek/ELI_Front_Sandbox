@@ -11,12 +11,14 @@ export const useAuthToken = () => {
   return [cookies[TOKEN_NAME], setAuthToken, removeAuthToken];
 };
 
-export const useLogout = () => {
-  const [, , removeAuthToken] = useAuthToken();
-  const apolloClient = useApolloClient();
+  export const useLogout = () => {
+    const [, , removeAuthToken] = useAuthToken();
+    const apolloClient = useApolloClient();
 
-  return async () => {
-    await apolloClient.clearStore(); // we remove all information in the store
-    removeAuthToken();
+    return async () => {
+      await apolloClient.clearStore(); // we remove all information in the store
+      removeAuthToken();
+    };
   };
-};
+
+

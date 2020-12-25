@@ -20,6 +20,7 @@ const AuthenticationForm = (): JSX.Element => {
 
   return (
     <div style={{ margin: "auto", padding: "100px" }}>
+      <pre>Login</pre>
       {error && <pre>try again</pre>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>

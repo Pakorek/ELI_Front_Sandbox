@@ -1,10 +1,16 @@
 import "./App.css";
 import { AuthGate } from "./components/AuthGate";
-const React = require('react')
-
+import CreateUser from "./components/CreateUser";
+import React from 'react';
 
 function App(): JSX.Element {
-  return <AuthGate />;
+  return (
+      <>
+        <AuthGate />
+        <CreateUser />
+      </>
+  )
+
 }
 
 export default App;
