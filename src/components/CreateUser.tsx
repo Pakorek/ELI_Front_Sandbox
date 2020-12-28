@@ -8,7 +8,8 @@ export type UserInput = {
     firstname: string,
     lastname: string,
     email: string,
-    password: string
+    password: string,
+    role: string
 }
 
 const CreateUser = (): JSX.Element => {
@@ -21,7 +22,6 @@ const CreateUser = (): JSX.Element => {
             // @ts-ignore
             const user = await createUser(values)
             console.log(user)
-            // await loginMutation(values.email, values.password)
         } catch (err) {
             setError(err);
         }
@@ -61,6 +61,12 @@ const CreateUser = (): JSX.Element => {
                         ref={register()}
                         placeholder="******"
                     />
+                </div>
+                <div>
+                    <select name="role" ref={register()}>
+                        <option value="TEACHER">Teacher</option>
+                        <option value="STUDENT">Student</option>
+                    </select>
                 </div>
                 <button type="submit">
                     Submit
