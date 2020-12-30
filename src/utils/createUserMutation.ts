@@ -31,17 +31,22 @@ export const useCreateUserMutation = () => {
         },
     });
 
+    // @ts-ignore
     const create = async (values: UserInput): Promise<FetchResult<any>> => {
         const {firstname, lastname, email, password, role} = values
-        return await mutation({
-            variables: {
-                firstName: firstname,
-                lastName: lastname,
-                email: email,
-                password: password,
-                role: role
-            },
-        });
+        // try {
+            return await mutation({
+                variables: {
+                    firstName: firstname,
+                    lastName: lastname,
+                    email: email,
+                    password: password,
+                    role: role
+                },
+            });
+        // } catch (err) {
+        //     console.log('error mutation', err)
+        // }
     };
 
     return [create, mutationResults];
