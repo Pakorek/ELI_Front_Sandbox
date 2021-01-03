@@ -14,6 +14,8 @@ export const createUserMutationGQL = gql`
             password: $password,
             role: $role
         }) {
+            firstName
+            lastName
             email
             password
         }
@@ -31,17 +33,25 @@ export const useCreateUserMutation = () => {
         },
     });
 
+    // @ts-ignore
     const create = async (values: UserInput): Promise<FetchResult<any>> => {
         const {firstname, lastname, email, password, role} = values
-        return await mutation({
-            variables: {
-                firstName: firstname,
-                lastName: lastname,
-                email: email,
-                password: password,
-                role: role
-            },
-        });
+        // if we catch Error here
+        // we don't catch errors in CreateUser.tsx (onSubmit)
+        // so we can't print them in the component
+        // try {
+            return await mutation({
+                variables: {
+                    firstName: firstname,
+                    lastName: lastname,
+                    email: email,
+                    password: password,
+                    role: role
+                },
+            });
+        // } catch (err) {
+        //     console.log('createUserMutation error', err.graphQLErrors[0].extensions.exception.validationErrors)
+        // }
     };
 
     return [create, mutationResults];
