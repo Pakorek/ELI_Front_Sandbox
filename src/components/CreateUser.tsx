@@ -18,18 +18,18 @@ const CreateUser = (): JSX.Element => {
     const [error, setError] = useState([]);
 
     const onSubmit = async (values: UserInput) => {
-        // can catch errors here
+        // can catch errors here and read validation messages from User Entity
         // but it's not 'front job'
-        // can catch errors in createUserMutation,
+        // can catch errors in createUserMutation (less operable)
         // but same thing
         // SO, need to deeply understand different Error (UserInputError, ApolloError, mutationError, etc)
         // and how and where manage them
         try {
             // @ts-ignore
             const user = await createUser(values)
-            console.log(user)
+            console.log('user created', user)
         } catch (err) {
-            console.log(err.graphQLErrors[0].extensions.exception.validationErrors)
+            console.log('createUser errors', err.graphQLErrors[0].extensions.exception.validationErrors)
             setError(err.graphQLErrors[0].extensions.exception.validationErrors);
         }
     };
