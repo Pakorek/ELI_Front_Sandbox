@@ -38,7 +38,8 @@ const TeacherGenerator = (): JSX.Element => {
 
     return <div style={{margin: "auto", padding: "100px"}}>
         <pre>Generate Teachers</pre>
-        { error && error.map((err: any) => <pre> {JSON.stringify(Object.values(err.constraints))}</pre> )}
+        { error && console.log(error)}
+        {/*{ error && error.map((err: any) => <pre> {JSON.stringify(Object.values(err.constraints))}</pre> )}*/}
         { users !== [] && users.map((user: any) => (
             <pre>{user.data.createUser.firstName + ' ' + user.data.createUser.lastName + ' created'}</pre>
         )

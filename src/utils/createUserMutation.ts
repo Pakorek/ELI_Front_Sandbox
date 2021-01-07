@@ -33,7 +33,6 @@ export const useCreateUserMutation = () => {
         },
     });
 
-    // @ts-ignore
     const create = async (values: UserInput): Promise<FetchResult<any>> => {
         const {firstname, lastname, email, password, role} = values
         // if we catch Error here
