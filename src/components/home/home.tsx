@@ -1,4 +1,5 @@
 import {CardRow, Container, Footer, Header} from "../../styles/elements";
+import CreateCourse from '../CreateCourse';
 const React = require('react')
 
 /*
@@ -42,6 +43,7 @@ export function Home(): JSX.Element {
                     {/*{data.getTeachers.forEach((teacher: TeacherType) => {*/}
                     {/*    console.log(teacher.firstName + teacher.lastName)*/}
                     {/*})}*/}
+                  <CreateCourse />
 
                 </CardRow>
             </Container>
