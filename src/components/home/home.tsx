@@ -1,5 +1,6 @@
 import {CardRow, Container, Footer, Header} from "../../styles/elements";
 import CreateCourse from '../CreateCourse';
+import CreateQuiz from '../CreateQuiz';
 const React = require('react')
 
 /*
@@ -44,6 +45,7 @@ export function Home(): JSX.Element {
                     {/*    console.log(teacher.firstName + teacher.lastName)*/}
                     {/*})}*/}
                   <CreateCourse />
+                  <CreateQuiz />
 
                 </CardRow>
             </Container>

@@ -1,26 +1,27 @@
 import {useForm} from "react-hook-form";
 import {useState} from "react";
-import {useCreateCourseMutation} from '../utils/createCourseMutation';
+import {useCreateQuestionMutation} from '../utils/createQuestionMutation';
+import CreateAnswer from './CreateAnswer';
 
 const React = require('react')
 
-export type CourseInput = {
+export type QuizInput = {
   title: string,
   subtitle?: string,
   content?: string,
 }
 
-const CreateCourse = (): JSX.Element => {
-  const [create, ] = useCreateCourseMutation();
+const CreateQuestion = (): JSX.Element => {
+  const [create, ] = useCreateQuestionMutation();
   const {handleSubmit, register} = useForm();
   const [error, setError] = useState([]);
-  const [course, setCourse] = useState()
+  const [question, setQuestion] = useState()
 
-  const onSubmit = async (values: CourseInput) => {
+  const onSubmit = async (values: QuizInput) => {
     try {
       // @ts-ignore
-      const course = await create(values)
-      setCourse(course)
+      const question = await create(values)
+      setQuestion(question)
     } catch (e) {
       console.log(e)
       setError(e)
@@ -30,8 +31,8 @@ const CreateCourse = (): JSX.Element => {
   };
 
   return (
-    <div style={{margin: "auto", padding: "50px"}}>
-      <pre>Create Course</pre>
+    <div style={{margin: "auto", padding: "50px", border: "1px solid black"}}>
+      <pre>Create Question</pre>
       {/*{ user && <pre>{JSON.stringify(user) + ' created'}</pre>}*/}
       { error && <code>{JSON.stringify(error)}</code>}
       {/*{ typeof error !== "object"*/}
@@ -41,9 +42,9 @@ const CreateCourse = (): JSX.Element => {
       <form onSubmit={handleSubmit(onSubmit)} noValidate={true}>
         <div>
           <input
-            name="title"
+            name="label"
             ref={register()}
-            placeholder="Title"
+            placeholder="Question..."
           />
         </div>
         <div>
@@ -53,6 +54,10 @@ const CreateCourse = (): JSX.Element => {
             placeholder="Subtitle"
           />
         </div>
+        <CreateAnswer />
+        <CreateAnswer />
+        <CreateAnswer />
+{/*
         <div>
           <input
             name="content"
@@ -60,6 +65,7 @@ const CreateCourse = (): JSX.Element => {
             placeholder="Content"
           />
         </div>
+*/}
         <button type="submit">
           Submit
         </button>
@@ -68,4 +74,4 @@ const CreateCourse = (): JSX.Element => {
   );
 };
 
-export default CreateCourse;
+export default CreateQuestion;

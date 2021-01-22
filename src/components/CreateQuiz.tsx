@@ -1,26 +1,27 @@
 import {useForm} from "react-hook-form";
 import {useState} from "react";
 import {useCreateCourseMutation} from '../utils/createCourseMutation';
+import CreateQuestion from './CreateQuestion';
 
 const React = require('react')
 
-export type CourseInput = {
+export type QuizInput = {
   title: string,
   subtitle?: string,
   content?: string,
 }
 
-const CreateCourse = (): JSX.Element => {
+const CreateQuiz = (): JSX.Element => {
   const [create, ] = useCreateCourseMutation();
   const {handleSubmit, register} = useForm();
   const [error, setError] = useState([]);
-  const [course, setCourse] = useState()
+  const [quiz, setQuiz] = useState()
 
-  const onSubmit = async (values: CourseInput) => {
+  const onSubmit = async (values: QuizInput) => {
     try {
       // @ts-ignore
-      const course = await create(values)
-      setCourse(course)
+      const quiz = await create(values)
+      setQuiz(quiz)
     } catch (e) {
       console.log(e)
       setError(e)
@@ -30,8 +31,8 @@ const CreateCourse = (): JSX.Element => {
   };
 
   return (
-    <div style={{margin: "auto", padding: "50px"}}>
-      <pre>Create Course</pre>
+    <div style={{margin: "auto", padding: "50px", border: "1px solid black"}}>
+      <pre>Create Quiz</pre>
       {/*{ user && <pre>{JSON.stringify(user) + ' created'}</pre>}*/}
       { error && <code>{JSON.stringify(error)}</code>}
       {/*{ typeof error !== "object"*/}
@@ -53,6 +54,8 @@ const CreateCourse = (): JSX.Element => {
             placeholder="Subtitle"
           />
         </div>
+        <CreateQuestion />
+{/*
         <div>
           <input
             name="content"
@@ -60,6 +63,7 @@ const CreateCourse = (): JSX.Element => {
             placeholder="Content"
           />
         </div>
+*/}
         <button type="submit">
           Submit
         </button>
@@ -68,4 +72,4 @@ const CreateCourse = (): JSX.Element => {
   );
 };
 
-export default CreateCourse;
+export default CreateQuiz;

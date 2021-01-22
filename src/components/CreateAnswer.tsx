@@ -1,26 +1,28 @@
 import {useForm} from "react-hook-form";
 import {useState} from "react";
-import {useCreateCourseMutation} from '../utils/createCourseMutation';
+import {useCreateQuestionMutation} from '../utils/createQuestionMutation';
+import CreateQuestion from './CreateQuestion';
+import { useCreateAnswerMutation } from '../utils/createAnswerMutation';
 
 const React = require('react')
 
-export type CourseInput = {
+export type AnswerInput = {
   title: string,
   subtitle?: string,
   content?: string,
 }
 
-const CreateCourse = (): JSX.Element => {
-  const [create, ] = useCreateCourseMutation();
+const CreateAnswer = (): JSX.Element => {
+  const [create, ] = useCreateAnswerMutation();
   const {handleSubmit, register} = useForm();
   const [error, setError] = useState([]);
-  const [course, setCourse] = useState()
+  const [answer, setAnswer] = useState()
 
-  const onSubmit = async (values: CourseInput) => {
+  const onSubmit = async (values: AnswerInput) => {
     try {
       // @ts-ignore
-      const course = await create(values)
-      setCourse(course)
+      const answer = await create(values)
+      setAnswer(answer)
     } catch (e) {
       console.log(e)
       setError(e)
@@ -30,8 +32,8 @@ const CreateCourse = (): JSX.Element => {
   };
 
   return (
-    <div style={{margin: "auto", padding: "50px"}}>
-      <pre>Create Course</pre>
+    <div style={{margin: "auto", padding: "30px", border: "1px solid black"}}>
+      <pre>Create Answer</pre>
       {/*{ user && <pre>{JSON.stringify(user) + ' created'}</pre>}*/}
       { error && <code>{JSON.stringify(error)}</code>}
       {/*{ typeof error !== "object"*/}
@@ -41,18 +43,16 @@ const CreateCourse = (): JSX.Element => {
       <form onSubmit={handleSubmit(onSubmit)} noValidate={true}>
         <div>
           <input
-            name="title"
+            name="label"
             ref={register()}
-            placeholder="Title"
+            placeholder="Answer..."
           />
         </div>
         <div>
-          <input
-            name="subtitle"
-            ref={register()}
-            placeholder="Subtitle"
-          />
+          <input type="checkbox" name="is_right" ref={register()} id="isRight" />
+          <label htmlFor="isRight">Correct</label>
         </div>
+{/*
         <div>
           <input
             name="content"
@@ -60,6 +60,7 @@ const CreateCourse = (): JSX.Element => {
             placeholder="Content"
           />
         </div>
+*/}
         <button type="submit">
           Submit
         </button>
@@ -68,4 +69,4 @@ const CreateCourse = (): JSX.Element => {
   );
 };
 
-export default CreateCourse;
+export default CreateAnswer;
