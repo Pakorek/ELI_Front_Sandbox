@@ -32,7 +32,7 @@ const CreateAnswer = (): JSX.Element => {
   };
 
   return (
-    <div style={{margin: "auto", padding: "30px", border: "1px solid black"}}>
+    <div style={{margin: "auto", padding: "20px", border: "1px solid black"}}>
       <pre>Create Answer</pre>
       {/*{ user && <pre>{JSON.stringify(user) + ' created'}</pre>}*/}
       { error && <code>{JSON.stringify(error)}</code>}

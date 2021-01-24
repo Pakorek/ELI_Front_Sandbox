@@ -17,20 +17,6 @@ type TeacherType = {
 
 
 export function Home(): JSX.Element {
-/*
-  const TEACHERS = gql`
-      {
-          getTeachers {
-              firstName
-              lastName
-          }
-      }
-  `
-    const {loading, error, data} = useQuery(TEACHERS);
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{JSON.stringify(error)}</p>;
-*/
 
     return (
         <>
@@ -40,14 +26,14 @@ export function Home(): JSX.Element {
                 </Container>
             </Header>
             <Container>
-                <CardRow>
+                {/*<CardRow>*/}
                     {/*{data.getTeachers.forEach((teacher: TeacherType) => {*/}
                     {/*    console.log(teacher.firstName + teacher.lastName)*/}
                     {/*})}*/}
-                  <CreateCourse />
+                  {/*<CreateCourse />*/}
                   <CreateQuiz />
 
-                </CardRow>
+                {/*</CardRow>*/}
             </Container>
             <Footer>
                 <Container>
