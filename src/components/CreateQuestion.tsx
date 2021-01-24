@@ -54,6 +54,11 @@ const CreateQuestion = (): JSX.Element => {
             placeholder="Subtitle"
           />
         </div>
+        <div>
+          <input type="checkbox" name="has_unique_answer" ref={register()} id="isUnique" />
+          <label htmlFor="isUnique">Multiple answers</label>
+        </div>
+        {/* if unique : CreateAnswer type radio, else type checkbox  */}
         <CreateAnswer />
         <CreateAnswer />
         <CreateAnswer />
