@@ -12,11 +12,12 @@ export type AnswerInput = {
   content?: string,
 }
 
-const CreateAnswer = (): JSX.Element => {
+const CreateAnswer = (radioType: boolean): JSX.Element => {
   const [create, ] = useCreateAnswerMutation();
   const {handleSubmit, register} = useForm();
   const [error, setError] = useState([]);
   const [answer, setAnswer] = useState()
+  const inputType = radioType ? 'radio' : 'checkbox';
 
   const onSubmit = async (values: AnswerInput) => {
     try {
@@ -44,6 +45,7 @@ const CreateAnswer = (): JSX.Element => {
         <div>
           <input
             name="label"
+            type={inputType}
             ref={register()}
             placeholder="Answer..."
           />

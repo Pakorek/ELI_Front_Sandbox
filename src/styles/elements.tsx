@@ -17,10 +17,10 @@ export const Footer = styled.footer`
   border-top: 2px solid ${colors.primary};
 `;
 
-export const Container = styled.div`
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+export const Container = styled.section`
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
   padding: 24px;
 `;
 

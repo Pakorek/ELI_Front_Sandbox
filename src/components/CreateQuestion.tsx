@@ -2,6 +2,7 @@ import {useForm} from "react-hook-form";
 import {useState} from "react";
 import {useCreateQuestionMutation} from '../utils/createQuestionMutation';
 import CreateAnswer from './CreateAnswer';
+import { QuestionType } from './CreateQuiz';
 
 const React = require('react')
 
@@ -11,17 +12,22 @@ export type QuizInput = {
   content?: string,
 }
 
-const CreateQuestion = (): JSX.Element => {
+// const CreateQuestion = ({question, key}: {question: QuestionType, key: number}): JSX.Element => {
+const CreateQuestion = ({ question, num }: {question: QuestionType, num: number}): JSX.Element => {
   const [create, ] = useCreateQuestionMutation();
   const {handleSubmit, register} = useForm();
-  const [error, setError] = useState([]);
-  const [question, setQuestion] = useState()
+  const [error, setError] = useState();
+  const [label, setLabel] = useState()
+  const inputType = question.hasUniqueAnswer;
+  // console.log('label', question)
+  // console.log('key', num)
+
 
   const onSubmit = async (values: QuizInput) => {
     try {
       // @ts-ignore
-      const question = await create(values)
-      setQuestion(question)
+      const label = await create(values)
+      setLabel(label)
     } catch (e) {
       console.log(e)
       setError(e)
@@ -32,7 +38,7 @@ const CreateQuestion = (): JSX.Element => {
 
   return (
     <div style={{margin: "auto", padding: "20px", border: "1px solid black"}}>
-      <pre>Create Question</pre>
+      <pre>{'Question ' + num?.toString() }</pre>
       {/*{ user && <pre>{JSON.stringify(user) + ' created'}</pre>}*/}
       { error && <code>{JSON.stringify(error)}</code>}
       {/*{ typeof error !== "object"*/}
@@ -44,6 +50,7 @@ const CreateQuestion = (): JSX.Element => {
           <input
             name="label"
             ref={register()}
+            value={question.label}
             placeholder="Question..."
           />
         </div>
@@ -56,12 +63,10 @@ const CreateQuestion = (): JSX.Element => {
         </div>
         <div>
           <input type="checkbox" name="has_unique_answer" ref={register()} id="isUnique" />
-          <label htmlFor="isUnique">Multiple answers</label>
+          <label htmlFor="isUnique">Unique answer</label>
         </div>
         {/* if unique : CreateAnswer type radio, else type checkbox  */}
-        <CreateAnswer />
-        <CreateAnswer />
-        <CreateAnswer />
+        {/*<CreateAnswer {...inputType}/>*/}
 {/*
         <div>
           <input
