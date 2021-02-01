@@ -28,20 +28,21 @@ export function QuizEditor(): JSX.Element {
   const [state, dispatch] = useReducer(quizReducer, initialState);
   const { inputTitle, inputSubtitle, inputQuestions, formSubmission, error } = useCreateQuiz();
 
-  const [question, setQuestion] = useState<Question>({ id: 0, label: 'initial' });
+  const [question, setQuestion] = useState<Question>({ id: 1, label: 'New Question' });
   const [questions, setQuestions] = useState<Question[]>([question]);
   const [questionLabel, setQuestionLabel] = useState('');
 
   const questionID = questions.length;
 
   useEffect(() => {
-    const upQuestions = questions.slice()
-    const id = question.id
-    const upQuest = upQuestions.filter(question => question.id === id)
-    upQuest[0].label = question.label
-    setQuestions(upQuestions)
+    const upQuestions = questions.slice();
+    const id = question.id;
+    const upQuest = upQuestions.filter(question => question.id === id);
+    upQuest[0].label = question.label;
+    setQuestions(upQuestions);
   }, [question]);
 
+/*
   const addQuestion = (event: FormEvent) => {
     event.preventDefault();
     console.log('AddQUestion');
@@ -54,6 +55,7 @@ export function QuizEditor(): JSX.Element {
     ]);
     setQuestionLabel('');
   };
+*/
 
 
   return (
@@ -110,17 +112,11 @@ export function QuizEditor(): JSX.Element {
               />
             </div>
 
-
-            <button
-              type="button"
-              onClick={() => setQuestions([...questions, newQuestion])}
-            >
-              New Question
-            </button>
-            {questions.map((question: Question) => (
-                <CreateQuestion question={question} setQuestion={setQuestion} />
-              )
-            )}
+            <CreateQuestion question={question}
+                            questions={questions}
+                            setQuestion={setQuestion}
+                            setQuestions={setQuestions}
+            />
           </form>
         </div>
       </Container>

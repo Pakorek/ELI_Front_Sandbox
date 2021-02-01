@@ -12,11 +12,12 @@ export type QuizInput = {
 }
 
 // const CreateQuestion = ({question, key}: {question: QuestionType, key: number}): JSX.Element => {
-const CreateQuestion = ({ question, setQuestion }:
+const CreateQuestion = ({ question, questions, setQuestion, setQuestions }:
                           {
                             question: Question,
+                            questions: Question[],
                             setQuestion: Dispatch<React.SetStateAction<Question>>,
-                            // setQuestions: SetStateAction<Question[]>
+                            setQuestions: Dispatch<React.SetStateAction<Question[]>>,
                           },
 ): JSX.Element => {
   const [create] = useCreateQuestionMutation();
@@ -28,24 +29,17 @@ const CreateQuestion = ({ question, setQuestion }:
   };
 
 
-  const onSubmit = async (values: QuizInput) => {
-/*
-    try {
-      // @ts-ignore
-      const label = await create(values);
-      setLabel(label);
-    } catch (e) {
-      console.log(e);
-      setError(e);
-      // setError(e.graphQLErrors[0].extensions.exception.validationErrors ?? e.graphQLErrors[0].message);
-    }
-*/
-
+  const onSubmit = () => {
+    // set QuestionState to QuizState
+    setQuestions([...questions, question])
+    setQuestion({id: ++question.id, label: 'New Question'})
   };
 
   return (
     <div key={question.id}>
-      <form>
+      <h4>New Question</h4>
+      <hr/>
+      <form onSubmit={onSubmit}>
         <label>
           <input
             name="label"
