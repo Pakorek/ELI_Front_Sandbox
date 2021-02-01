@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { Dispatch, useReducer, useState } from 'react';
 import { useCreateCourseMutation } from '../utils/createCourseMutation';
 import CreateQuestion from './CreateQuestion';
 import useCreateQuiz from '../hooks/useCreateQuiz';
+import quizReducer, { Action, QuizState } from '../reducers/quizReducer';
 
 const React = require('react');
 
@@ -25,7 +26,7 @@ const initialQuestionState: QuestionState = {
   questions: [],
 };
 
-const CreateQuiz = (): JSX.Element => {
+const CreateQuiz = ({ dispatch }: { dispatch: Dispatch<Action> }): JSX.Element => {
   const [create] = useCreateCourseMutation();
   // const { handleSubmit, register } = useForm();
 
@@ -48,27 +49,15 @@ const CreateQuiz = (): JSX.Element => {
     });
   };
 
-/*
-  const onSubmit = async (values: QuizInput) => {
-    try {
-      // @ts-ignore
-      const quiz = await create(values);
-      setQuiz(quiz);
-    } catch (e) {
-      console.log(e);
-      setError(e);
-      // setError(e.graphQLErrors[0].extensions.exception.validationErrors ?? e.graphQLErrors[0].message);
-    }
-
-  };
-*/
-
-  const { inputTitle, inputSubtitle, inputQuestions, formSubmission, error } = useCreateQuiz()
+  const { inputTitle, inputSubtitle, inputQuestions, formSubmission, error } = useCreateQuiz();
+  // const [state, dispatch] = useReducer(quizReducer, initialState);
 
   return (
     <div style={{ width: '50%', padding: '24px', border: '1px solid black' }}>
       <pre>Quiz Editor</pre>
-      {error !== "" && <pre>{error}</pre>}
+      <p>{inputTitle.value}</p>
+      <p>{inputSubtitle.value}</p>
+      {error !== '' && <pre>{error}</pre>}
 
       <form onSubmit={formSubmission} noValidate>
         <div>
@@ -100,6 +89,7 @@ const CreateQuiz = (): JSX.Element => {
 
         {/*  button + -> add CreateQuestion -> setQuestionEditor(newCreateQuestion)  */}
         {/*{ questionEditor.questions.map((question, key) => <CreateQuestion {...question} {...key}/>)  }*/}
+{/*
         {questionModel.questions.map((question, key) =>
           <CreateQuestion
             question={question}
@@ -107,6 +97,7 @@ const CreateQuiz = (): JSX.Element => {
             num={++key}
           />)
         }
+*/}
         {/*{ questionModel.questions.map((question, key) => console.log('key map', key))  }*/}
 
         {/*

@@ -1,7 +1,7 @@
 import { QuestionType } from '../components/CreateQuiz';
 import { AnswerInput } from '../components/CreateAnswer';
 
-type QuizState = {
+export type QuizState = {
   title: string;
   subtitle?: string;
   questions?: QuestionType[];
@@ -35,6 +35,7 @@ export type Action =
 const quizReducer = (state: QuizState, action: Action): QuizState => {
   switch (action.type) {
     case "UPDATE_TITLE":
+      console.log("UpdateTitle in reducer")
       return { ...state, title: action.newTitle };
     default:
       return state;

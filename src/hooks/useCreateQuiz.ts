@@ -1,6 +1,10 @@
 import { useState, useContext, ChangeEvent, FormEvent } from "react";
 import QuizContext from '../context/QuizContext';
 
+type Question = {
+  label: string
+}
+
 type CreateQuizReturn = {
   inputTitle: {
     value: string;
@@ -11,8 +15,8 @@ type CreateQuizReturn = {
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   };
   inputQuestions: {
-    value: [];
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    value: Question[];
+    onChange: () => void;
   };
   formSubmission: (e: FormEvent) => Promise<void>;
   // loading: boolean;
@@ -24,6 +28,7 @@ function useCreateQuiz(): CreateQuizReturn {
   const dispatch = useContext(QuizContext);
   const [title, setTitle] = useState('Quiz Title');
   const [subtitle, setSubtitle] = useState('Subtitle');
+  const [question, setQuestion] = useState([{ label: 'Label' }]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   // const [delayed, setDelayed] = useDelay(500);
@@ -59,7 +64,7 @@ function useCreateQuiz(): CreateQuizReturn {
   return {
     inputTitle: {
       value: title,
-      onChange: (e: ChangeEvent<HTMLInputElement>) => dispatch({ type: "UPDATE_TITLE",  }),
+      onChange: (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value),
       // onChange: (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value),
     },
     inputSubtitle: {
@@ -67,8 +72,8 @@ function useCreateQuiz(): CreateQuizReturn {
       onChange: (e: ChangeEvent<HTMLInputElement>) => setSubtitle(e.target.value),
     },
     inputQuestions: {
-      value: [],
-      onChange: (e: ChangeEvent<HTMLInputElement>) => setSubtitle(e.target.value),
+      value: question,
+      onChange: () => setQuestion([...question, {label: 'Label2'}]),
     },
     formSubmission,
     // loading,
