@@ -5,6 +5,7 @@ import { FormEvent, useEffect, useReducer, useState } from 'react';
 import quizReducer from '../reducers/quizReducer';
 import useCreateQuiz from '../hooks/useCreateQuiz';
 import CreateQuestion from './CreateQuestion';
+import CreateAnswer, { Answer } from './CreateAnswer';
 
 const React = require('react');
 
@@ -12,6 +13,12 @@ const initialState = {
   title: '',
   subtitle: '',
   questions: [],
+};
+
+export const initialQuestion: Question = {
+  id: 1,
+  label: 'New Question',
+  answers: [{ id: 1, label: 'New Answer...' }],
 };
 
 const newQuestion = {
@@ -22,41 +29,34 @@ const newQuestion = {
 export interface Question {
   id: number;
   label: string;
+  answers: Answer[]
 }
 
 export function QuizEditor(): JSX.Element {
+   console.log('re rendered')
   const [state, dispatch] = useReducer(quizReducer, initialState);
   const { inputTitle, inputSubtitle, inputQuestions, formSubmission, error } = useCreateQuiz();
 
-  const [question, setQuestion] = useState<Question>({ id: 1, label: 'New Question' });
+  const [question, setQuestion] = useState<Question>(initialQuestion);
   const [questions, setQuestions] = useState<Question[]>([question]);
-  const [questionLabel, setQuestionLabel] = useState('');
-
-  const questionID = questions.length;
+  const [answer, setAnswer] = useState<Answer>({ id: 1, label: 'New Answer ...' });
 
   useEffect(() => {
     const upQuestions = questions.slice();
     const id = question.id;
-    const upQuest = upQuestions.filter(question => question.id === id);
-    upQuest[0].label = question.label;
+    const upQuest = questions.filter(q => q.id === id);
+    if (upQuest[0] !== undefined) upQuest[0].label = question.label;
     setQuestions(upQuestions);
   }, [question]);
 
-/*
-  const addQuestion = (event: FormEvent) => {
-    event.preventDefault();
-    console.log('AddQUestion');
-    setQuestions([
-      ...questions,
-      {
-        id: questions.length,
-        label: questionLabel,
-      },
-    ]);
-    setQuestionLabel('');
-  };
-*/
+  useEffect(() => {
+    const liveAnswer = question.answers.filter(a => a.id === answer.id);
+    console.log('liveAnswer', liveAnswer);
+    console.log('question', question);
+    console.log('questions', questions);
+    liveAnswer[0].label = answer.label;
 
+    }, [answer]);
 
   return (
     <QuizContext.Provider value={dispatch}>
@@ -65,21 +65,19 @@ export function QuizEditor(): JSX.Element {
           <h2>{inputTitle.value}</h2>
           <h4>{inputSubtitle.value}</h4>
 
-
           <ul>
-            {questions.map((question: Question) => <li key={question.id}> {question.id + '. ' + question.label} </li>)}
-            {/*{ questions.map( (question: Question) => console.log(question)) }*/}
+            {questions.map((question: Question) => (
+              <li key={question.id}>
+                {question.id + '. ' + question.label}
+                <ul>
+                  {question.answers.map(answer => (
+                    <li key={answer.id}>
+                      {answer.id + '. ' + answer.label}</li>
+                  ))}
+                </ul>
+              </li>),
+            )}
           </ul>
-
-          {/*
-          <ul>
-            {inputQuestions.value.map((question: { label: string }, key: number) =>
-              <li>{++key + '. ' + question.label}</li>)}
-          </ul>
-
-          {state.questions?.map((question, key) => <div><h6>{++key + '. ' + question.label}</h6></div>)}
-*/}
-
         </div>
 
 
@@ -114,8 +112,16 @@ export function QuizEditor(): JSX.Element {
 
             <CreateQuestion question={question}
                             questions={questions}
+                            answer={answer}
                             setQuestion={setQuestion}
                             setQuestions={setQuestions}
+                            setAnswer={setAnswer}
+            />
+            <CreateAnswer
+              answer={answer}
+              setAnswer={setAnswer}
+              question={question}
+              setQuestion={setQuestion}
             />
           </form>
         </div>

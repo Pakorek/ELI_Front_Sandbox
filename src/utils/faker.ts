@@ -4,7 +4,7 @@ import faker from 'faker';
 // const SPECIALITIES = ['Français', 'Mathématiques', 'Anglais', 'Histoire', 'Géographie']
 
 export async function generateTeachers(number: number): Promise<any[]> {
-    const [createUser,] = useCreateUserMutation();
+    // const [createUser,] = useCreateUserMutation();
     let TEACHERS = [];
 
     for (let i = 0; i < number; i++) {

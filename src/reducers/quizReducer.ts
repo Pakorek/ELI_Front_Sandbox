@@ -1,5 +1,5 @@
 import { QuestionType } from '../components/CreateQuiz';
-import { AnswerInput } from '../components/CreateAnswer';
+import { Answer } from '../components/CreateAnswer';
 
 export type QuizState = {
   title: string;
@@ -19,7 +19,7 @@ export type Action =
   | {
   type: "ADD_ANSWER";
   questionId: number;
-  newAnswer: AnswerInput;
+  newAnswer: Answer;
 }
   | {
   type: "UPDATE_QUESTION";
@@ -29,7 +29,7 @@ export type Action =
   | {
   type: "UPDATE_ANSWER";
   questionId: number;
-  answer: AnswerInput;
+  answer: Answer;
 };
 
 const quizReducer = (state: QuizState, action: Action): QuizState => {

@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import {useLoginMutation} from "./loginMutation";
 import { CourseInput } from '../components/CreateCourse';
 import { QuizInput } from '../components/CreateQuiz';
-import { AnswerInput } from '../components/CreateAnswer';
+import { Answer } from '../components/CreateAnswer';
 // import { useAuthToken } from "../hooks/auth";
 
 export const createAnswerMutationGQL = gql`
@@ -31,7 +31,8 @@ export const useCreateAnswerMutation = () => {
         },
     });
 
-    const create = async (values: AnswerInput): Promise<FetchResult<any>> => {
+/*
+    const create = async (values: Answer): Promise<FetchResult<any>> => {
         const {title, subtitle, content} = values
         // if we catch Error here
         // we don't catch errors in CreateUser.tsx (onSubmit)
@@ -48,6 +49,7 @@ export const useCreateAnswerMutation = () => {
         //     console.log('createUserMutation error', err.graphQLErrors[0].extensions.exception.validationErrors)
         // }
     };
+*/
 
-    return [create, mutationResults];
+    // return [create, mutationResults];
 };
