@@ -2,30 +2,34 @@ import React, { Dispatch, useState } from 'react';
 import { useCreateQuestionMutation } from '../utils/createQuestionMutation';
 import CreateQuestion from './CreateQuestion';
 import { useCreateAnswerMutation } from '../utils/createAnswerMutation';
-import { Question } from './QuizEditor';
+import { Question, QuizState } from './QuizEditor';
+import { Action } from '../reducers/quizReducer';
+
 export type Answer = {
   id: number,
   label: string,
+  questionID: number
 }
 
-const CreateAnswer = ({ question, setQuestion, answer, setAnswer }:
+const CreateAnswer = ({ dispatch, answer, questionID }:
                         {
-                          question: Question,
-                          setQuestion: Dispatch<React.SetStateAction<Question>>,
+                          dispatch: React.Dispatch<Action>,
                           answer: Answer,
-                          setAnswer: Dispatch<React.SetStateAction<Answer>>,
+                          questionID: number
                         },
 ): JSX.Element => {
 
-  const updateAnswerLabel = (id: number, label: string) => {
-    setAnswer({id: id, label: label})
+  const updateLabel = (value: string) => {
+    dispatch({ type: 'UPDATE_ANSWER', id: answer.id, label: value, questionID: questionID});
   };
 
 
   const onSubmit = () => {
+/*
     const answers = question.answers.slice()
     question.answers = [...answers, answer]
     setAnswer({id: ++answer.id, label: 'New Answer...'})
+*/
   };
 
   return (
@@ -37,14 +41,16 @@ const CreateAnswer = ({ question, setQuestion, answer, setAnswer }:
             name="label"
             type='text'
             value={answer.label}
-            onChange={e => updateAnswerLabel(answer.id, e.target.value)}
+            onChange={e => updateLabel(e.target.value)}
 
           />
         </div>
+{/*
         <div>
           <input type="checkbox" name="is_right" id="isRight" />
           <label htmlFor="isRight">Correct</label>
         </div>
+*/}
         {/*
         <div>
           <input

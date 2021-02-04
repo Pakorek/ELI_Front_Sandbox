@@ -49,7 +49,7 @@ const CreateQuiz = ({ dispatch }: { dispatch: Dispatch<Action> }): JSX.Element =
     });
   };
 
-  const { inputTitle, inputSubtitle, inputQuestions, formSubmission, error } = useCreateQuiz();
+  const { inputTitle, inputSubtitle, formSubmission, error } = useCreateQuiz();
   // const [state, dispatch] = useReducer(quizReducer, initialState);
 
   return (

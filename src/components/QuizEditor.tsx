@@ -15,11 +15,13 @@ export interface Question {
   answers: Answer[]
 }
 
+/*
 export let initialQuestion: Question = {
   id: 1,
   label: 'New Question',
   answers: [{ id: 1, label: 'New Answer...' }],
 };
+*/
 
 export type QuizState = {
   title: string,
@@ -33,36 +35,15 @@ const initialState: QuizState = {
   questions: [{
     id: 1,
     label: 'New Question',
-    answers: [{ id: 1, label: 'New Answer...' }],
+    answers: [{ id: 1, label: 'New Answer...', questionID: 1 }],
   }],
 };
 
 export function QuizEditor(): JSX.Element {
   const [state, dispatch] = useReducer(quizReducer, initialState);
-  const { inputTitle, inputSubtitle, inputQuestions, formSubmission, error } = useCreateQuiz();
-
-/*
-  const [question, setQuestion] = useState<Question>(initialQuestion);
-  const [questions, setQuestions] = useState<Question[]>([question]);
-  const [answer, setAnswer] = useState<Answer>({ id: 1, label: 'New Answer ...' });
-*/
+  const { inputTitle, inputSubtitle, formSubmission, error } = useCreateQuiz();
 
   const [quiz, setQuiz] = useState<QuizState>(initialState);
-
-/*
-  useEffect(() => {
-    const upQuestions = questions.slice();
-    const id = question.id;
-    const upQuest = questions.filter(q => q.id === id);
-    if (upQuest[0] !== undefined) upQuest[0].label = question.label;
-    setQuestions(upQuestions);
-  }, [question]);
-
-  useEffect(() => {
-    const liveAnswer = question.answers.filter(a => a.id === answer.id);
-    liveAnswer[0].label = answer.label;
-  }, [answer]);
-*/
 
   const updateTitle = (value: string) => {
     dispatch({ type: 'UPDATE_TITLE', newTitle: value });
@@ -104,23 +85,16 @@ export function QuizEditor(): JSX.Element {
               <input
                 name="title"
                 style={{ border: 'none', borderBottom: '2px solid black', marginBottom: '20px' }}
-                // ref={register()}
-                // placeholder="Title"
                 value={state.title}
                 onChange={e => updateTitle(e.target.value)}
-                // onChange={(e) => setTitle(e.target.value)}
               />
             </div>
             <div>
               <input
                 style={{ border: 'none', borderBottom: '2px solid black', marginBottom: '20px' }}
                 name="subtitle"
-                // ref={register()}
-                // placeholder="Subtitle"
                 value={state.subtitle}
                 onChange={e => updateSubtitle(e.target.value)}
-
-                // onChange={(e) => setSubtitle(e.target.value)}
               />
             </div>
 
@@ -128,7 +102,6 @@ export function QuizEditor(): JSX.Element {
 
 
               <CreateQuestion
-                              state={state}
                               dispatch={dispatch}
                               question={q}
                               key={key}
