@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { FormEvent, useState } from 'react';
 import { useCreateUserMutation } from '../utils/createUserMutation';
-import { generateTeachers } from '../utils/faker';
 import faker from 'faker';
 
 const React = require('react');
@@ -28,7 +27,8 @@ const CreateUser = () => {
       const user = await createUser(values);
       setUser(user);
     } catch (e) {
-      setError(e.graphQLErrors[0].extensions.exception.validationErrors ?? e.graphQLErrors[0].message);
+      setError(e);
+      // setError(e.graphQLErrors[0].extensions.exception.validationErrors ?? e.graphQLErrors[0].message);
     }
 
   };
@@ -60,7 +60,7 @@ const CreateUser = () => {
   }
 
     return (
-      <div style={{ margin: 'auto', padding: '100px' }}>
+      <div style={{ margin: 'auto', padding: '50px' }}>
         <pre>Sign Up</pre>
         {user && <pre>{JSON.stringify(user) + ' created'}</pre>}
         {error && <pre>{JSON.stringify(error)}</pre>}
@@ -106,9 +106,9 @@ const CreateUser = () => {
           </button>
         </form>
 
-        <form onSubmit={onSubmitGenerator} noValidate>
+        <form onSubmit={onSubmitGenerator} noValidate style={{padding: '10px', border: '1px solid black'}}>
           <input type="number" value={nb} onChange={(e) => setNb(+e.target.value)} />
-          <button type="submit">Generate</button>
+          <button type="submit">Generate Teacher</button>
         </form>
 
       </div>

@@ -3,7 +3,7 @@ import { Dispatch, useReducer, useState } from 'react';
 import { useCreateCourseMutation } from '../utils/createCourseMutation';
 import CreateQuestion from './CreateQuestion';
 import useCreateQuiz from '../hooks/useCreateQuiz';
-import quizReducer, { Action, QuizState } from '../reducers/quizReducer';
+import quizReducer, { Action } from '../reducers/quizReducer';
 
 const React = require('react');
 

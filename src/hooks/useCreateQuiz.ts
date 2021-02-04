@@ -1,9 +1,6 @@
 import { useState, useContext, ChangeEvent, FormEvent } from "react";
 import QuizContext from '../context/QuizContext';
-
-type Question = {
-  label: string
-}
+import { initialQuestion, Question } from '../components/QuizEditor';
 
 type CreateQuizReturn = {
   inputTitle: {
@@ -16,7 +13,6 @@ type CreateQuizReturn = {
   };
   inputQuestions: {
     value: Question[];
-    onChange: () => void;
   };
   formSubmission: (e: FormEvent) => Promise<void>;
   // loading: boolean;
@@ -28,7 +24,7 @@ function useCreateQuiz(): CreateQuizReturn {
   const dispatch = useContext(QuizContext);
   const [title, setTitle] = useState('Quiz Title');
   const [subtitle, setSubtitle] = useState('Subtitle');
-  const [question, setQuestion] = useState([{ label: 'Label' }]);
+  const [questions, setQuestions] = useState<Question[]>([initialQuestion]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   // const [delayed, setDelayed] = useDelay(500);
@@ -72,8 +68,7 @@ function useCreateQuiz(): CreateQuizReturn {
       onChange: (e: ChangeEvent<HTMLInputElement>) => setSubtitle(e.target.value),
     },
     inputQuestions: {
-      value: question,
-      onChange: () => setQuestion([...question, {label: 'Label2'}]),
+      value: questions,
     },
     formSubmission,
     // loading,

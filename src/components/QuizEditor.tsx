@@ -9,22 +9,23 @@ import CreateAnswer, { Answer } from './CreateAnswer';
 
 const React = require('react');
 
-const initialState = {
-  title: '',
-  subtitle: '',
-  questions: [],
-};
-
 export const initialQuestion: Question = {
   id: 1,
   label: 'New Question',
   answers: [{ id: 1, label: 'New Answer...' }],
 };
 
-const newQuestion = {
-  id: 0,
-  label: '',
+const initialState = {
+  title: 'Title',
+  subtitle: 'Subtitle',
+  questions: [initialQuestion],
 };
+
+export type QuizState = {
+  title: string,
+  subtitle?: string,
+  questions: Question[]
+}
 
 export interface Question {
   id: number;
@@ -33,13 +34,15 @@ export interface Question {
 }
 
 export function QuizEditor(): JSX.Element {
-   console.log('re rendered')
+  console.log('re rendered');
   const [state, dispatch] = useReducer(quizReducer, initialState);
   const { inputTitle, inputSubtitle, inputQuestions, formSubmission, error } = useCreateQuiz();
 
   const [question, setQuestion] = useState<Question>(initialQuestion);
   const [questions, setQuestions] = useState<Question[]>([question]);
   const [answer, setAnswer] = useState<Answer>({ id: 1, label: 'New Answer ...' });
+
+  const [quiz, setQuiz] = useState<QuizState>(initialState)
 
   useEffect(() => {
     const upQuestions = questions.slice();
@@ -51,12 +54,9 @@ export function QuizEditor(): JSX.Element {
 
   useEffect(() => {
     const liveAnswer = question.answers.filter(a => a.id === answer.id);
-    console.log('liveAnswer', liveAnswer);
-    console.log('question', question);
-    console.log('questions', questions);
     liveAnswer[0].label = answer.label;
 
-    }, [answer]);
+  }, [answer]);
 
   return (
     <QuizContext.Provider value={dispatch}>
@@ -66,13 +66,13 @@ export function QuizEditor(): JSX.Element {
           <h4>{inputSubtitle.value}</h4>
 
           <ul>
-            {questions.map((question: Question) => (
-              <li key={question.id}>
-                {question.id + '. ' + question.label}
+            {inputQuestions.value.map((q: Question) => (
+              <li key={q.id}>
+                {q.id + '. ' + q.label}
                 <ul>
-                  {question.answers.map(answer => (
-                    <li key={answer.id}>
-                      {answer.id + '. ' + answer.label}</li>
+                  {q.answers.map(a => (
+                    <li key={a.id}>
+                      {a.id + '. ' + a.label}</li>
                   ))}
                 </ul>
               </li>),
@@ -110,19 +110,27 @@ export function QuizEditor(): JSX.Element {
               />
             </div>
 
-            <CreateQuestion question={question}
-                            questions={questions}
-                            answer={answer}
-                            setQuestion={setQuestion}
-                            setQuestions={setQuestions}
-                            setAnswer={setAnswer}
-            />
-            <CreateAnswer
-              answer={answer}
-              setAnswer={setAnswer}
-              question={question}
-              setQuestion={setQuestion}
-            />
+            {inputQuestions.value.map((q: Question, key: number) => (
+
+
+              <CreateQuestion question={question}
+                              questions={questions}
+                              setQuestions={setQuestions}
+                              answer={answer}
+                              setQuestion={setQuestion}
+                              setAnswer={setAnswer}
+                              state={state}
+                              dispatch={dispatch}
+                              quiz={quiz}
+                              setQuiz={setQuiz}
+              />
+            ))}
+            {/*<CreateAnswer*/}
+            {/*  answer={answer}*/}
+            {/*  setAnswer={setAnswer}*/}
+            {/*  question={question}*/}
+            {/*  setQuestion={setQuestion}*/}
+            {/*/>*/}
           </form>
         </div>
       </Container>

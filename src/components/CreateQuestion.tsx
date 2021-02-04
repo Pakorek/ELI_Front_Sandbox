@@ -1,9 +1,8 @@
-import { useForm } from 'react-hook-form';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useCreateQuestionMutation } from '../utils/createQuestionMutation';
-import CreateAnswer, { Answer } from './CreateAnswer';
-import { QuestionType } from './CreateQuiz';
-import { initialQuestion, Question } from './QuizEditor';
+import { Answer } from './CreateAnswer';
+import { initialQuestion, Question, QuizState } from './QuizEditor';
+import { Action } from '../reducers/quizReducer';
 
 export type QuizInput = {
   title: string,
@@ -11,15 +10,23 @@ export type QuizInput = {
   content?: string,
 }
 
-// const CreateQuestion = ({question, key}: {question: QuestionType, key: number}): JSX.Element => {
-const CreateQuestion = ({ question, questions, setQuestion, setQuestions, answer, setAnswer }:
+
+const CreateQuestion = ({ question, setQuestion, questions, setQuestions, quiz, setQuiz, answer, setAnswer, dispatch, state}:
                           {
                             question: Question,
-                            questions: Question[],
-                            answer: Answer,
                             setQuestion: Dispatch<React.SetStateAction<Question>>,
+
+                            questions: Question[],
                             setQuestions: Dispatch<React.SetStateAction<Question[]>>,
-                            setAnswer: Dispatch<React.SetStateAction<Answer>>
+
+                            quiz: QuizState,
+                            setQuiz: Dispatch<SetStateAction<QuizState>>,
+
+                            answer: Answer,
+                            setAnswer: Dispatch<React.SetStateAction<Answer>>,
+
+                            dispatch:  React.Dispatch<Action>,
+                            state: QuizState,
                           },
 ): JSX.Element => {
   const [create] = useCreateQuestionMutation();
@@ -31,22 +38,30 @@ const CreateQuestion = ({ question, questions, setQuestion, setQuestions, answer
   };
 
   const onSubmit = () => {
-    // set QuestionState to QuizState
-    setQuestions([...questions, question])
-    let id = question.id
-    setQuestion({id: ++id, label: 'New Question', answers: []})
+    initialQuestion.id = initialQuestion.id++
+    setQuiz({
+      title: state.title,
+      subtitle: state.subtitle,
+      questions: [...questions, initialQuestion]})
   };
 
+   const updateLabel = (value: string) => {
+    dispatch({ type: "UPDATE_QUESTION", id: question.id, label: value })
+  }
+
+  const stateQuestion = state.questions.find( q => q.id === question.id)
+
+
   return (
-    <div key={question.id}>
+    <div>
       <h4>New Question</h4>
       <hr/>
       <form onSubmit={onSubmit}>
         <label>
           <input
             name="label"
-            value={question.label}
-            onChange={e => updateQuestionLabel(question.id, e.target.value, question.answers)}
+            value={stateQuestion?.label}
+            onChange={e => updateLabel(e.target.value)}
           />
         </label>
         <button type="submit">

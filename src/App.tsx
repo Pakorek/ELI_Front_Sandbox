@@ -9,8 +9,6 @@ function App(): JSX.Element {
   return (
       <>
         <AuthGate />
-        <CreateUser />
-        <TeacherGenerator />
       </>
   )
 
