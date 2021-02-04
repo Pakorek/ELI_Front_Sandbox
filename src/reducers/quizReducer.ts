@@ -1,6 +1,6 @@
 import { QuestionType } from '../components/CreateQuiz';
 import { Answer } from '../components/CreateAnswer';
-import { Question, QuizState } from '../components/QuizEditor';
+import { initialQuestion, Question, QuizState } from '../components/QuizEditor';
 
 export type Action =
   | {
@@ -8,8 +8,11 @@ export type Action =
   newTitle: string;
 }
   | {
+  type: "UPDATE_SUBTITLE";
+  newSubtitle: string;
+}
+  | {
   type: "ADD_QUESTION";
-  newQuestion: QuestionType;
 }
   | {
   type: "ADD_ANSWER";
@@ -44,7 +47,35 @@ const quizReducer = (state: QuizState, action: Action): QuizState => {
       }
       return nextState || state
 
-    case "UPDATE_ANSWER":
+    case "UPDATE_TITLE":
+      nextState = {
+        title: action.newTitle,
+        subtitle: state.subtitle,
+        questions: state.questions
+      }
+      return nextState || state
+
+    case "UPDATE_SUBTITLE":
+      nextState = {
+        title: state.title,
+        subtitle: action.newSubtitle,
+        questions: state.questions
+      }
+      return nextState || state
+
+    case "ADD_QUESTION":
+      let lastQuestionID = state.questions[state.questions.length - 1].id
+      nextState = {
+        title: state.title,
+        subtitle: state.subtitle,
+        questions: [...state.questions, {
+          id: ++lastQuestionID,
+          label: 'New Question',
+          answers: [{ id: 1, label: 'New Answer...' }],
+        }]
+      }
+      return nextState || state
+
     default:
       return state;
   }

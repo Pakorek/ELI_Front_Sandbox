@@ -9,16 +9,16 @@ import CreateAnswer, { Answer } from './CreateAnswer';
 
 const React = require('react');
 
-export const initialQuestion: Question = {
+export interface Question {
+  id: number;
+  label: string;
+  answers: Answer[]
+}
+
+export let initialQuestion: Question = {
   id: 1,
   label: 'New Question',
   answers: [{ id: 1, label: 'New Answer...' }],
-};
-
-const initialState = {
-  title: 'Title',
-  subtitle: 'Subtitle',
-  questions: [initialQuestion],
 };
 
 export type QuizState = {
@@ -27,23 +27,29 @@ export type QuizState = {
   questions: Question[]
 }
 
-export interface Question {
-  id: number;
-  label: string;
-  answers: Answer[]
-}
+const initialState: QuizState = {
+  title: 'Title',
+  subtitle: 'Subtitle',
+  questions: [{
+    id: 1,
+    label: 'New Question',
+    answers: [{ id: 1, label: 'New Answer...' }],
+  }],
+};
 
 export function QuizEditor(): JSX.Element {
-  console.log('re rendered');
   const [state, dispatch] = useReducer(quizReducer, initialState);
   const { inputTitle, inputSubtitle, inputQuestions, formSubmission, error } = useCreateQuiz();
 
+/*
   const [question, setQuestion] = useState<Question>(initialQuestion);
   const [questions, setQuestions] = useState<Question[]>([question]);
   const [answer, setAnswer] = useState<Answer>({ id: 1, label: 'New Answer ...' });
+*/
 
-  const [quiz, setQuiz] = useState<QuizState>(initialState)
+  const [quiz, setQuiz] = useState<QuizState>(initialState);
 
+/*
   useEffect(() => {
     const upQuestions = questions.slice();
     const id = question.id;
@@ -55,18 +61,26 @@ export function QuizEditor(): JSX.Element {
   useEffect(() => {
     const liveAnswer = question.answers.filter(a => a.id === answer.id);
     liveAnswer[0].label = answer.label;
-
   }, [answer]);
+*/
+
+  const updateTitle = (value: string) => {
+    dispatch({ type: 'UPDATE_TITLE', newTitle: value });
+  };
+
+  const updateSubtitle = (value: string) => {
+    dispatch({ type: 'UPDATE_SUBTITLE', newSubtitle: value });
+  };
 
   return (
     <QuizContext.Provider value={dispatch}>
       <Container>
         <div style={{ width: '50%', padding: '24px', border: '1px solid black' }}>
-          <h2>{inputTitle.value}</h2>
-          <h4>{inputSubtitle.value}</h4>
+          <h2>{state.title}</h2>
+          <h4>{state.subtitle}</h4>
 
           <ul>
-            {inputQuestions.value.map((q: Question) => (
+            {state.questions.map((q: Question) => (
               <li key={q.id}>
                 {q.id + '. ' + q.label}
                 <ul>
@@ -92,8 +106,8 @@ export function QuizEditor(): JSX.Element {
                 style={{ border: 'none', borderBottom: '2px solid black', marginBottom: '20px' }}
                 // ref={register()}
                 // placeholder="Title"
-                value={inputTitle.value}
-                onChange={inputTitle.onChange}
+                value={state.title}
+                onChange={e => updateTitle(e.target.value)}
                 // onChange={(e) => setTitle(e.target.value)}
               />
             </div>
@@ -103,26 +117,21 @@ export function QuizEditor(): JSX.Element {
                 name="subtitle"
                 // ref={register()}
                 // placeholder="Subtitle"
-                value={inputSubtitle.value}
-                onChange={inputSubtitle.onChange}
+                value={state.subtitle}
+                onChange={e => updateSubtitle(e.target.value)}
 
                 // onChange={(e) => setSubtitle(e.target.value)}
               />
             </div>
 
-            {inputQuestions.value.map((q: Question, key: number) => (
+            {state.questions.map((q: Question, key: number) => (
 
 
-              <CreateQuestion question={question}
-                              questions={questions}
-                              setQuestions={setQuestions}
-                              answer={answer}
-                              setQuestion={setQuestion}
-                              setAnswer={setAnswer}
+              <CreateQuestion
                               state={state}
                               dispatch={dispatch}
-                              quiz={quiz}
-                              setQuiz={setQuiz}
+                              question={q}
+                              key={key}
               />
             ))}
             {/*<CreateAnswer*/}

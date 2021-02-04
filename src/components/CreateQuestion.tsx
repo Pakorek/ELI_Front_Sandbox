@@ -11,51 +11,32 @@ export type QuizInput = {
 }
 
 
-const CreateQuestion = ({ question, setQuestion, questions, setQuestions, quiz, setQuiz, answer, setAnswer, dispatch, state}:
+const CreateQuestion = ({ dispatch, state, question }:
                           {
-                            question: Question,
-                            setQuestion: Dispatch<React.SetStateAction<Question>>,
-
-                            questions: Question[],
-                            setQuestions: Dispatch<React.SetStateAction<Question[]>>,
-
-                            quiz: QuizState,
-                            setQuiz: Dispatch<SetStateAction<QuizState>>,
-
-                            answer: Answer,
-                            setAnswer: Dispatch<React.SetStateAction<Answer>>,
-
-                            dispatch:  React.Dispatch<Action>,
+                            dispatch: React.Dispatch<Action>,
                             state: QuizState,
+                            question: Question
                           },
 ): JSX.Element => {
   const [create] = useCreateQuestionMutation();
   const [error, setError] = useState();
   // const inputType = question.hasUniqueAnswer;
 
-  const updateQuestionLabel = (id: number, label: string, answers: Answer[]) => {
-    setQuestion({id: id, label: label, answers: answers})
-  };
-
   const onSubmit = () => {
-    initialQuestion.id = initialQuestion.id++
-    setQuiz({
-      title: state.title,
-      subtitle: state.subtitle,
-      questions: [...questions, initialQuestion]})
+    dispatch({ type: 'ADD_QUESTION' });
   };
 
-   const updateLabel = (value: string) => {
-    dispatch({ type: "UPDATE_QUESTION", id: question.id, label: value })
-  }
+  const updateLabel = (value: string) => {
+    dispatch({ type: 'UPDATE_QUESTION', id: question.id, label: value });
+  };
 
-  const stateQuestion = state.questions.find( q => q.id === question.id)
+  const stateQuestion = state.questions.find(q => q.id === question.id);
 
 
   return (
     <div>
       <h4>New Question</h4>
-      <hr/>
+      <hr />
       <form onSubmit={onSubmit}>
         <label>
           <input
