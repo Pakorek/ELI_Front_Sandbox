@@ -16,7 +16,6 @@ export type Action =
   | {
   type: 'ADD_ANSWER';
   questionId: number;
-  answerID: number;
   questionLen: number;
 }
   | {
@@ -89,12 +88,11 @@ const quizReducer = (state: QuizState, action: Action): QuizState => {
       return { ...state, questions } || state;
 
     case 'ADD_ANSWER':
-      // let qs = state.questions.slice()
-      console.log('ADD ANSWER');
       let q = questions.find(q => q.id === action.questionId);
       if (q && q.answers.length === action.questionLen) {
+        let lastAnswerID = q.answers[q.answers.length - 1].id
         q.answers = [...q.answers, {
-            id: ++action.answerID,
+            id: ++lastAnswerID,
             label: 'New Answer ...',
             questionID: action.questionId,
           }];

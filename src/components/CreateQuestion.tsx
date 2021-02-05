@@ -33,8 +33,8 @@ const CreateQuestion = ({ dispatch, question }:
   };
 
   return (
-    <div>
-      <h4>New Question</h4>
+    <div style={{ margin: 'auto', padding: '20px', border: '1px solid black' }}>
+      {/*<h4>New Question</h4>*/}
       <form onSubmit={onSubmit}>
         <label>
           <input
@@ -50,7 +50,6 @@ const CreateQuestion = ({ dispatch, question }:
       <button type="button" onClick={removeQuestion}>
         X
       </button>
-      <hr />
       {question.answers.map((answer: Answer, key: number) => (
         <CreateAnswer dispatch={dispatch}
                       answer={answer}
@@ -59,7 +58,6 @@ const CreateQuestion = ({ dispatch, question }:
                       questionLen={question.answers.length}
         />
       ))}
-
     </div>
   );
 };

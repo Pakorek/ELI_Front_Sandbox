@@ -25,7 +25,7 @@ const CreateAnswer = ({ dispatch, answer, questionID, questionLen }:
   };
 
   const addAnswer = () => {
-    dispatch({ type: 'ADD_ANSWER', questionId: questionID, answerID: answer.id, questionLen: questionLen });
+    dispatch({ type: 'ADD_ANSWER', questionId: questionID, questionLen: questionLen });
   };
 
   const removeAnswer = () => {
@@ -33,8 +33,8 @@ const CreateAnswer = ({ dispatch, answer, questionID, questionLen }:
   };
 
   return (
-    <div style={{ margin: 'auto', padding: '20px', border: '1px solid black' }} >
-      <pre>Create Answer</pre>
+    <div style={{ margin: 'auto', padding: '10px'}} >
+      {/*<pre>Create Answer</pre>*/}
       <form noValidate >
           <input
             name="label"
@@ -50,14 +50,14 @@ const CreateAnswer = ({ dispatch, answer, questionID, questionLen }:
         </div>
 
 */}
-        <button type="button" onClick={addAnswer}>
-          Add Answer
-        </button>
         <button type="button" onClick={removeAnswer}>
           X
         </button>
-
       </form>
+      <button type="button" onClick={addAnswer}>
+        Add Answer
+      </button>
+
     </div>
   );
 };
