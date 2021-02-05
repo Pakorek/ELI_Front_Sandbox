@@ -6,6 +6,7 @@ import quizReducer from '../reducers/quizReducer';
 import useCreateQuiz from '../hooks/useCreateQuiz';
 import CreateQuestion from './CreateQuestion';
 import { Answer } from './CreateAnswer';
+
 const React = require('react');
 
 export interface Question {
@@ -88,20 +89,12 @@ export function QuizEditor(): JSX.Element {
             </div>
 
             {state.questions.map((q: Question, key: number) => (
-
-
               <CreateQuestion
-                              dispatch={dispatch}
-                              question={q}
-                              key={key}
+                dispatch={dispatch}
+                question={q}
+                key={key}
               />
-            ))}
-            {/*<CreateAnswer*/}
-            {/*  answer={answer}*/}
-            {/*  setAnswer={setAnswer}*/}
-            {/*  question={question}*/}
-            {/*  setQuestion={setQuestion}*/}
-            {/*/>*/}
+              ))}
           </form>
         </div>
       </Container>

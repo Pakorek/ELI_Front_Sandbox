@@ -84,7 +84,9 @@ const quizReducer = (state: QuizState, action: Action): QuizState => {
       return nextState || state;
 
     case 'REMOVE_QUESTION':
-      return nextState || state;
+      questions = questions.filter( q => q.id !== action.id)
+
+      return { ...state, questions } || state;
 
     case 'ADD_ANSWER':
       // let qs = state.questions.slice()

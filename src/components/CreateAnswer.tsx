@@ -32,7 +32,6 @@ const CreateAnswer = ({ dispatch, answer, questionID, questionLen }:
     dispatch({ type: 'REMOVE_ANSWER', questionID: questionID, id: answer.id });
   };
 
-
   return (
     <div style={{ margin: 'auto', padding: '20px', border: '1px solid black' }} >
       <pre>Create Answer</pre>
