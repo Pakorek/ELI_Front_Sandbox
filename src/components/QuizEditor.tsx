@@ -1,12 +1,11 @@
 import { CardRow, Container, Footer, Header } from '../styles/elements';
 import CreateQuiz from './CreateQuiz';
 import QuizContext from '../context/QuizContext';
-import { FormEvent, useEffect, useReducer, useState } from 'react';
+import { useReducer } from 'react';
 import quizReducer from '../reducers/quizReducer';
 import useCreateQuiz from '../hooks/useCreateQuiz';
 import CreateQuestion from './CreateQuestion';
-import CreateAnswer, { Answer } from './CreateAnswer';
-
+import { Answer } from './CreateAnswer';
 const React = require('react');
 
 export interface Question {
@@ -14,14 +13,6 @@ export interface Question {
   label: string;
   answers: Answer[]
 }
-
-/*
-export let initialQuestion: Question = {
-  id: 1,
-  label: 'New Question',
-  answers: [{ id: 1, label: 'New Answer...' }],
-};
-*/
 
 export type QuizState = {
   title: string,
@@ -41,7 +32,7 @@ const initialState: QuizState = {
 
 export function QuizEditor(): JSX.Element {
   const [state, dispatch] = useReducer(quizReducer, initialState);
-  const { inputTitle, inputSubtitle, formSubmission, error } = useCreateQuiz();
+  const { formSubmission, error } = useCreateQuiz();
 
   const updateTitle = (value: string) => {
     dispatch({ type: 'UPDATE_TITLE', newTitle: value });
@@ -61,11 +52,11 @@ export function QuizEditor(): JSX.Element {
           <ul>
             {state.questions.map((q: Question, key: number) => (
               <li key={key}>
-                {q.id + '. ' + q.label}
+                {++key + '. ' + q.label}
                 <ul>
                   {q.answers.map((a: Answer, key: number) => (
                     <li key={key}>
-                      {a.id + '. ' + a.label}</li>
+                      {++key + '. ' + a.label}</li>
                   ))}
                 </ul>
               </li>),

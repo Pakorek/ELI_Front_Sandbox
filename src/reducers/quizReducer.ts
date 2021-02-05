@@ -29,6 +29,15 @@ export type Action =
   id: number;
   label: string;
   questionID: number
+}
+  | {
+  type: 'REMOVE_QUESTION';
+  id: number;
+}
+  | {
+  type: 'REMOVE_ANSWER';
+  id: number;
+  questionID: number
 };
 
 const quizReducer = (state: QuizState, action: Action): QuizState => {
@@ -74,6 +83,9 @@ const quizReducer = (state: QuizState, action: Action): QuizState => {
       }
       return nextState || state;
 
+    case 'REMOVE_QUESTION':
+      return nextState || state;
+
     case 'ADD_ANSWER':
       // let qs = state.questions.slice()
       console.log('ADD ANSWER');
@@ -95,15 +107,26 @@ const quizReducer = (state: QuizState, action: Action): QuizState => {
       return nextState || state;
 
     case 'UPDATE_ANSWER':
-      // const quests = state.questions.slice()
       const question = questions.find(q => q.id === action.questionID);
       const answer = question?.answers.find(a => a.id === action.id);
       if (answer) answer.label = action.label;
       nextState = {
         ...state,
-        questions: questions,
+        questions
       };
       return nextState || state;
+
+    case 'REMOVE_ANSWER':
+      let questAnswers = questions.find(q => q.id === action.questionID);
+      if (questAnswers) questAnswers.answers = questAnswers.answers.filter( a => a.id !== action.id)
+      nextState = {
+        ...state,
+        questions
+      }
+
+      return nextState || state;
+
+
 
     default:
       return state;

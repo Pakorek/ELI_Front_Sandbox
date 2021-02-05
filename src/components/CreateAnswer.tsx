@@ -25,11 +25,12 @@ const CreateAnswer = ({ dispatch, answer, questionID, questionLen }:
   };
 
   const addAnswer = () => {
-    console.log('add answer')
     dispatch({ type: 'ADD_ANSWER', questionId: questionID, answerID: answer.id, questionLen: questionLen });
   };
 
-
+  const removeAnswer = () => {
+    dispatch({ type: 'REMOVE_ANSWER', questionID: questionID, id: answer.id });
+  };
 
 
   return (
@@ -52,6 +53,9 @@ const CreateAnswer = ({ dispatch, answer, questionID, questionLen }:
 */}
         <button type="button" onClick={addAnswer}>
           Add Answer
+        </button>
+        <button type="button" onClick={removeAnswer}>
+          X
         </button>
 
       </form>
