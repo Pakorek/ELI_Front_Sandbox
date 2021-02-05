@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { useCreateQuestionMutation } from '../utils/createQuestionMutation';
 import CreateAnswer, { Answer } from './CreateAnswer';
 import { Question, QuizState } from './QuizEditor';
@@ -28,7 +28,6 @@ const CreateQuestion = ({ dispatch, question }:
     dispatch({ type: 'UPDATE_QUESTION', id: question.id, label: value });
   };
 
-
   return (
     <div>
       <h4>New Question</h4>
@@ -50,8 +49,10 @@ const CreateQuestion = ({ dispatch, question }:
                       answer={answer}
                       key={key}
                       questionID={question.id}
+                      questionLen={question.answers.length}
         />
       ))}
+
     </div>
   );
 };

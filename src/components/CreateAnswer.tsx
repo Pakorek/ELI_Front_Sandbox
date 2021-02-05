@@ -11,11 +11,12 @@ export type Answer = {
   questionID: number
 }
 
-const CreateAnswer = ({ dispatch, answer, questionID }:
+const CreateAnswer = ({ dispatch, answer, questionID, questionLen }:
                         {
                           dispatch: React.Dispatch<Action>,
                           answer: Answer,
-                          questionID: number
+                          questionID: number,
+                          questionLen: number
                         },
 ): JSX.Element => {
 
@@ -23,20 +24,18 @@ const CreateAnswer = ({ dispatch, answer, questionID }:
     dispatch({ type: 'UPDATE_ANSWER', id: answer.id, label: value, questionID: questionID});
   };
 
-
-  const onSubmit = () => {
-/*
-    const answers = question.answers.slice()
-    question.answers = [...answers, answer]
-    setAnswer({id: ++answer.id, label: 'New Answer...'})
-*/
+  const addAnswer = () => {
+    console.log('add answer')
+    dispatch({ type: 'ADD_ANSWER', questionId: questionID, answerID: answer.id, questionLen: questionLen });
   };
 
+
+
+
   return (
-    <div style={{ margin: 'auto', padding: '20px', border: '1px solid black' }}>
+    <div style={{ margin: 'auto', padding: '20px', border: '1px solid black' }} >
       <pre>Create Answer</pre>
-      <form onSubmit={onSubmit} noValidate>
-        <div>
+      <form noValidate >
           <input
             name="label"
             type='text'
@@ -44,25 +43,17 @@ const CreateAnswer = ({ dispatch, answer, questionID }:
             onChange={e => updateLabel(e.target.value)}
 
           />
-        </div>
 {/*
         <div>
           <input type="checkbox" name="is_right" id="isRight" />
           <label htmlFor="isRight">Correct</label>
         </div>
+
 */}
-        {/*
-        <div>
-          <input
-            name="content"
-            ref={register()}
-            placeholder="Content"
-          />
-        </div>
-*/}
-        <button type="submit">
-          Submit
+        <button type="button" onClick={addAnswer}>
+          Add Answer
         </button>
+
       </form>
     </div>
   );

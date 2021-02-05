@@ -43,8 +43,6 @@ export function QuizEditor(): JSX.Element {
   const [state, dispatch] = useReducer(quizReducer, initialState);
   const { inputTitle, inputSubtitle, formSubmission, error } = useCreateQuiz();
 
-  const [quiz, setQuiz] = useState<QuizState>(initialState);
-
   const updateTitle = (value: string) => {
     dispatch({ type: 'UPDATE_TITLE', newTitle: value });
   };
@@ -61,12 +59,12 @@ export function QuizEditor(): JSX.Element {
           <h4>{state.subtitle}</h4>
 
           <ul>
-            {state.questions.map((q: Question) => (
-              <li key={q.id}>
+            {state.questions.map((q: Question, key: number) => (
+              <li key={key}>
                 {q.id + '. ' + q.label}
                 <ul>
-                  {q.answers.map(a => (
-                    <li key={a.id}>
+                  {q.answers.map((a: Answer, key: number) => (
+                    <li key={key}>
                       {a.id + '. ' + a.label}</li>
                   ))}
                 </ul>
