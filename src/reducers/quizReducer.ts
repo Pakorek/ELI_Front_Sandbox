@@ -85,15 +85,22 @@ const quizReducer = (state: QuizState, action: Action): QuizState => {
 
     case 'ADD_ANSWER':
       let q = questions.find(q => q.id === action.questionId);
-
       if (q && q.answers.length === action.questionLen) {
-        let lastAnswerID = q.answers[q.answers.length - 1].id;
-        q.answers = [...q.answers, {
-          id: ++lastAnswerID,
-          label: 'New Answer ...',
-          questionID: action.questionId,
-        }];
-
+        // if empty answers
+        if (q.answers.length === 0) {
+          q.answers = [{
+            id: 1,
+            label: 'New Answer ...',
+            questionID: action.questionId
+          }]
+        } else {
+          let lastAnswerID = q.answers[q.answers.length - 1].id;
+          q.answers = [...q.answers, {
+            id: ++lastAnswerID,
+            label: 'New Answer ...',
+            questionID: action.questionId,
+          }];
+        }
         nextState = { ...state, questions: questions };
       }
       return nextState || state;
@@ -107,6 +114,7 @@ const quizReducer = (state: QuizState, action: Action): QuizState => {
 
     case 'REMOVE_ANSWER':
       let questAnswers = questions.find(q => q.id === action.questionID);
+
       if (questAnswers) questAnswers.answers = questAnswers.answers.filter(a => a.id !== action.id);
       nextState = {...state, questions };
       return nextState || state;

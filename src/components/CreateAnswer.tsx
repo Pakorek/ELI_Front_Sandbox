@@ -20,10 +20,6 @@ const CreateAnswer = ({ dispatch, answer, questionID, questionLen }:
     dispatch({ type: 'UPDATE_ANSWER', id: answer.id, label: value, questionID: questionID });
   };
 
-  const addAnswer = () => {
-    dispatch({ type: 'ADD_ANSWER', questionId: questionID, questionLen: questionLen });
-  };
-
   const removeAnswer = () => {
     dispatch({ type: 'REMOVE_ANSWER', questionID: questionID, id: answer.id });
   };
@@ -49,9 +45,6 @@ const CreateAnswer = ({ dispatch, answer, questionID, questionLen }:
           X
         </button>
       </form>
-      <button type="button" onClick={addAnswer}>
-        Add Answer
-      </button>
     </div>
   );
 };

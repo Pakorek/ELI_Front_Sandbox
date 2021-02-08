@@ -27,6 +27,11 @@ const CreateQuestion = ({ dispatch, question }:
     dispatch({ type: 'REMOVE_QUESTION', id: question.id });
   };
 
+  const addAnswer = () => {
+    dispatch({ type: 'ADD_ANSWER', questionId: question.id, questionLen: question.answers.length });
+  };
+
+
   return (
     <div style={{ margin: 'auto', padding: '20px', border: '1px solid black' }}>
       <form>
@@ -41,6 +46,10 @@ const CreateQuestion = ({ dispatch, question }:
           X
         </button>
       </form>
+      <button type="button" onClick={addAnswer}>
+        Add Answer
+      </button>
+
       {question.answers.map((answer: Answer, key: number) => (
         <CreateAnswer dispatch={dispatch}
                       answer={answer}
