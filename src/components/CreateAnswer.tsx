@@ -1,8 +1,4 @@
-import React, { Dispatch, useState } from 'react';
-import { useCreateQuestionMutation } from '../utils/createQuestionMutation';
-import CreateQuestion from './CreateQuestion';
-import { useCreateAnswerMutation } from '../utils/createAnswerMutation';
-import { Question, QuizState } from './QuizEditor';
+import React from 'react';
 import { Action } from '../reducers/quizReducer';
 
 export type Answer = {
@@ -21,7 +17,7 @@ const CreateAnswer = ({ dispatch, answer, questionID, questionLen }:
 ): JSX.Element => {
 
   const updateLabel = (value: string) => {
-    dispatch({ type: 'UPDATE_ANSWER', id: answer.id, label: value, questionID: questionID});
+    dispatch({ type: 'UPDATE_ANSWER', id: answer.id, label: value, questionID: questionID });
   };
 
   const addAnswer = () => {
@@ -33,17 +29,16 @@ const CreateAnswer = ({ dispatch, answer, questionID, questionLen }:
   };
 
   return (
-    <div style={{ margin: 'auto', padding: '10px'}} >
-      {/*<pre>Create Answer</pre>*/}
-      <form noValidate >
-          <input
-            name="label"
-            type='text'
-            value={answer.label}
-            onChange={e => updateLabel(e.target.value)}
+    <div style={{ margin: 'auto', padding: '10px' }}>
+      <form noValidate>
+        <input
+          name="label"
+          type='text'
+          value={answer.label}
+          onChange={e => updateLabel(e.target.value)}
 
-          />
-{/*
+        />
+        {/*
         <div>
           <input type="checkbox" name="is_right" id="isRight" />
           <label htmlFor="isRight">Correct</label>
@@ -57,7 +52,6 @@ const CreateAnswer = ({ dispatch, answer, questionID, questionLen }:
       <button type="button" onClick={addAnswer}>
         Add Answer
       </button>
-
     </div>
   );
 };

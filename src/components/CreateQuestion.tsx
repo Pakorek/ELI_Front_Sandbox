@@ -1,7 +1,7 @@
-import React, { Dispatch, FormEvent, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import { useCreateQuestionMutation } from '../utils/createQuestionMutation';
 import CreateAnswer, { Answer } from './CreateAnswer';
-import { Question, QuizState } from './QuizEditor';
+import { Question } from './QuizEditor';
 import { Action } from '../reducers/quizReducer';
 
 export type QuizInput = {
@@ -9,7 +9,6 @@ export type QuizInput = {
   subtitle?: string,
   content?: string,
 }
-
 
 const CreateQuestion = ({ dispatch, question }:
                           {
@@ -19,10 +18,6 @@ const CreateQuestion = ({ dispatch, question }:
 ): JSX.Element => {
   const [create] = useCreateQuestionMutation();
   const [error, setError] = useState();
-
-  const onSubmit = () => {
-    dispatch({ type: 'ADD_QUESTION' });
-  };
 
   const updateLabel = (value: string) => {
     dispatch({ type: 'UPDATE_QUESTION', id: question.id, label: value });
@@ -34,8 +29,7 @@ const CreateQuestion = ({ dispatch, question }:
 
   return (
     <div style={{ margin: 'auto', padding: '20px', border: '1px solid black' }}>
-      {/*<h4>New Question</h4>*/}
-      <form onSubmit={onSubmit}>
+      <form>
         <label>
           <input
             name="label"
@@ -43,13 +37,10 @@ const CreateQuestion = ({ dispatch, question }:
             onChange={e => updateLabel(e.target.value)}
           />
         </label>
-        <button type="submit">
-          Add
+        <button type="button" onClick={removeQuestion}>
+          X
         </button>
       </form>
-      <button type="button" onClick={removeQuestion}>
-        X
-      </button>
       {question.answers.map((answer: Answer, key: number) => (
         <CreateAnswer dispatch={dispatch}
                       answer={answer}

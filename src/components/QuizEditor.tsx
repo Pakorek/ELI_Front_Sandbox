@@ -1,13 +1,11 @@
-import { CardRow, Container, Footer, Header } from '../styles/elements';
-import CreateQuiz from './CreateQuiz';
+import React from 'react';
+import { Container } from '../styles/elements';
 import QuizContext from '../context/QuizContext';
 import { useReducer } from 'react';
 import quizReducer from '../reducers/quizReducer';
 import useCreateQuiz from '../hooks/useCreateQuiz';
 import CreateQuestion from './CreateQuestion';
 import { Answer } from './CreateAnswer';
-
-const React = require('react');
 
 export interface Question {
   id: number;
@@ -43,6 +41,10 @@ export function QuizEditor(): JSX.Element {
     dispatch({ type: 'UPDATE_SUBTITLE', newSubtitle: value });
   };
 
+  const addQuestion = () => {
+    dispatch({ type: 'ADD_QUESTION' });
+  };
+
   return (
     <QuizContext.Provider value={dispatch}>
       <Container>
@@ -65,7 +67,6 @@ export function QuizEditor(): JSX.Element {
           </ul>
         </div>
 
-
         <div style={{ width: '50%', padding: '10px', border: '1px solid black' }}>
           <pre>Quiz Editor</pre>
           {error !== '' && <pre>{error}</pre>}
@@ -87,6 +88,10 @@ export function QuizEditor(): JSX.Element {
                 onChange={e => updateSubtitle(e.target.value)}
               />
             </div>
+            <button type="button" onClick={addQuestion}>
+              New Question
+            </button>
+
 
             {state.questions.map((q: Question, key: number) => (
               <CreateQuestion
