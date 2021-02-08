@@ -7,12 +7,12 @@ export type Answer = {
   questionID: number
 }
 
-const CreateAnswer = ({ dispatch, answer, questionID, questionLen }:
+const CreateAnswer = ({ dispatch, answer, questionID, uniqueAnswer }:
                         {
                           dispatch: React.Dispatch<Action>,
                           answer: Answer,
                           questionID: number,
-                          questionLen: number
+                          uniqueAnswer: boolean
                         },
 ): JSX.Element => {
 
@@ -27,23 +27,20 @@ const CreateAnswer = ({ dispatch, answer, questionID, questionLen }:
   return (
     <div style={{ margin: 'auto', padding: '10px' }}>
       <form noValidate>
-        <input
-          name="label"
-          type='text'
-          value={answer.label}
-          onChange={e => updateLabel(e.target.value)}
-
-        />
-        {/*
+        <div style={{ display: 'flex' }}>
+          <input type={uniqueAnswer ? 'radio' : 'checkbox'} />
+          <input
+            name="label"
+            type='text'
+            value={answer.label}
+            onChange={e => updateLabel(e.target.value)}
+          />
+          <button type="button" onClick={removeAnswer}>X</button>
+        </div>
         <div>
           <input type="checkbox" name="is_right" id="isRight" />
           <label htmlFor="isRight">Correct</label>
         </div>
-
-*/}
-        <button type="button" onClick={removeAnswer}>
-          X
-        </button>
       </form>
     </div>
   );

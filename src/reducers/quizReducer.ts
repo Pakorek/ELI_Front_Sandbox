@@ -57,6 +57,7 @@ const quizReducer = (state: QuizState, action: Action): QuizState => {
           id: ++lastQuestionID,
           label: 'New Question',
           answers: [{ id: 1, label: 'New Answer...', questionID: ++lastQuestionID }],
+          uniqueAnswer: true,
         }],
       };
       return nextState || state;
@@ -77,6 +78,7 @@ const quizReducer = (state: QuizState, action: Action): QuizState => {
             id: 1,
             label: 'New Question',
             answers: [{ id: 1, label: 'New Answer...', questionID: 1 }],
+            uniqueAnswer: true
           }]
         }
       }

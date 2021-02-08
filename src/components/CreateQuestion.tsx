@@ -45,19 +45,24 @@ const CreateQuestion = ({ dispatch, question }:
         <button type="button" onClick={removeQuestion}>
           X
         </button>
+        <div>
+          <label>
+            <input type="checkbox" name="is_multiple"/>
+            <small>Plusieurs réponses possibles</small>
+          </label>
+        </div>
       </form>
-      <button type="button" onClick={addAnswer}>
-        Add Answer
-      </button>
-
       {question.answers.map((answer: Answer, key: number) => (
         <CreateAnswer dispatch={dispatch}
                       answer={answer}
                       key={key}
                       questionID={question.id}
-                      questionLen={question.answers.length}
+                      uniqueAnswer={question.uniqueAnswer}
         />
       ))}
+      <button type="button" onClick={addAnswer}>
+        Add Answer
+      </button>
     </div>
   );
 };

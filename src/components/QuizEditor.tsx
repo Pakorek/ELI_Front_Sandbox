@@ -10,7 +10,8 @@ import { Answer } from './CreateAnswer';
 export interface Question {
   id: number;
   label: string;
-  answers: Answer[]
+  answers: Answer[];
+  uniqueAnswer: boolean;
 }
 
 export type QuizState = {
@@ -26,6 +27,7 @@ const initialState: QuizState = {
     id: 1,
     label: 'New Question',
     answers: [{ id: 1, label: 'New Answer...', questionID: 1 }],
+    uniqueAnswer: true,
   }],
 };
 
@@ -88,10 +90,6 @@ export function QuizEditor(): JSX.Element {
                 onChange={e => updateSubtitle(e.target.value)}
               />
             </div>
-            <button type="button" onClick={addQuestion}>
-              New Question
-            </button>
-
 
             {state.questions.map((q: Question, key: number) => (
               <CreateQuestion
@@ -100,6 +98,9 @@ export function QuizEditor(): JSX.Element {
                 key={key}
               />
               ))}
+            <button type="button" onClick={addQuestion}>
+              New Question
+            </button>
           </form>
         </div>
       </Container>
