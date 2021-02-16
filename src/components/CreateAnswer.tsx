@@ -4,7 +4,8 @@ import { Action } from '../reducers/quizReducer';
 export type Answer = {
   id: number,
   label: string,
-  questionID: number
+  questionID: number,
+  isCorrect: boolean
 }
 
 const CreateAnswer = ({ dispatch, answer, questionID, uniqueAnswer }:
@@ -17,7 +18,7 @@ const CreateAnswer = ({ dispatch, answer, questionID, uniqueAnswer }:
 ): JSX.Element => {
 
   const updateLabel = (value: string) => {
-    dispatch({ type: 'UPDATE_ANSWER', id: answer.id, label: value, questionID: questionID });
+    dispatch({ type: 'UPDATE_ANSWER_LABEL', id: answer.id, label: value, questionID: questionID });
   };
 
   const removeAnswer = () => {

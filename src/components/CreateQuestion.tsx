@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useCreateQuestionMutation } from '../utils/createQuestionMutation';
 import CreateAnswer, { Answer } from './CreateAnswer';
 import { Question } from './QuizEditor';
@@ -18,9 +18,14 @@ const CreateQuestion = ({ dispatch, question }:
 ): JSX.Element => {
   const [create] = useCreateQuestionMutation();
   const [error, setError] = useState();
+  console.log('rendered createQuestion : ', question.uniqueAnswer)
 
   const updateLabel = (value: string) => {
     dispatch({ type: 'UPDATE_QUESTION', id: question.id, label: value });
+  };
+
+  const toggleAnswerType = () => {
+    dispatch({ type: 'TOGGLE_ANSWER_TYPE', id: question.id, value: question.uniqueAnswer });
   };
 
   const removeQuestion = () => {
@@ -31,6 +36,10 @@ const CreateQuestion = ({ dispatch, question }:
     dispatch({ type: 'ADD_ANSWER', questionId: question.id, questionLen: question.answers.length });
   };
 
+  //re rendering answers when toggle answer type
+  useEffect(() => {
+
+  }, [question])
 
   return (
     <div style={{ margin: 'auto', padding: '20px', border: '1px solid black' }}>
@@ -47,7 +56,7 @@ const CreateQuestion = ({ dispatch, question }:
         </button>
         <div>
           <label>
-            <input type="checkbox" name="is_multiple"/>
+            <input type="checkbox" name="is_multiple" checked={question.uniqueAnswer} onChange={toggleAnswerType}/>
             <small>Plusieurs réponses possibles</small>
           </label>
         </div>
