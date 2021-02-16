@@ -64,7 +64,13 @@ export function QuizEditor(): JSX.Element {
                 {++key + ". " + q.label}
                 <ul>
                   {q.answers.map((a: Answer, key: number) => (
-                    <li key={key}>{++key + ". " + a.label}</li>
+                    <div key={key}>
+                      <label>
+                        <input type={q.uniqueAnswer ? "radio" : "checkbox"} />
+                        {a.label}
+                      </label>
+                    </div>
+                    // <li key={key}>{++key + ". " + a.label}</li>
                   ))}
                 </ul>
               </li>

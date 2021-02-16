@@ -56,7 +56,7 @@ const CreateQuestion = ({ dispatch, question }:
         </button>
         <div>
           <label>
-            <input type="checkbox" name="is_multiple" checked={question.uniqueAnswer} onChange={toggleAnswerType}/>
+            <input type="checkbox" name="is_multiple" onChange={toggleAnswerType}/>
             <small>Plusieurs réponses possibles</small>
           </label>
         </div>

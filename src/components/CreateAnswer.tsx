@@ -38,10 +38,12 @@ const CreateAnswer = ({ dispatch, answer, questionID, uniqueAnswer }:
           />
           <button type="button" onClick={removeAnswer}>X</button>
         </div>
+{/*
         <div>
           <input type="checkbox" name="is_right" id="isRight" />
           <label htmlFor="isRight">Correct</label>
         </div>
+*/}
       </form>
     </div>
   );
